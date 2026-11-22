@@ -3,143 +3,421 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Baixar o Cortes</title>
-<meta name="description" content="Cortes transforma gravações de gameplay em Shorts prontos, no seu PC. Escolha a sua placa de vídeo e baixe o instalador certo.">
+<title>Cortes: sua gameplay vira Short</title>
+<meta name="description" content="O Cortes encontra os melhores momentos da sua gravação do OBS, enquadra câmera e jogo, legenda e exporta Shorts prontos. Roda inteiro no seu PC.">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0d0f">
+<meta property="og:title" content="Cortes: sua gameplay vira Short">
+<meta property="og:description" content="Do OBS ao Short pronto, sem sair do seu PC.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ec4899'/%3E%3Cg fill='none' stroke='%231a0611' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='3.4'/%3E%3Ccircle cx='10' cy='22' r='3.4'/%3E%3Cpath d='M25 7L12.6 20M19 19l6 6M12.600 12.600L16 16'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --fundo: #131315; --trilha: #1b1b1e; --clipe: #26262b; --fio: rgba(255, 255, 255, .1);
-    --texto: #ededf0; --apagado: #9c9ca6; --rosa: #ec4899; --rosa-escuro: #1a0611; --agulha: #6ea8ff;
+    --fundo: #0d0d0f; --chao: #131316; --painel: #18181c; --clipe: #24242a; --fio: rgba(255, 255, 255, .08); --fio2: rgba(255, 255, 255, .14);
+    --texto: #f2f2f5; --apagado: #a3a3ad; --fraco: #70707b;
+    --rosa: #ec4899; --rosa-claro: #f9a8d4; --rosa-escuro: #1a0611; --agulha: #6ea8ff; --jogo: #34d399; --camera: #8aa0ff; --ambar: #fbbf24;
+    --titulo: "Bricolage Grotesque", "Segoe UI", sans-serif; --corpo: "Onest", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    --largura: 1160px;
   }
   * { box-sizing: border-box; margin: 0; }
-  html { color-scheme: dark; }
-  body { background: var(--fundo); color: var(--texto); font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-  a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
-  .pagina { max-width: 860px; margin: 0 auto; padding: 0 24px 96px; }
+  html { color-scheme: dark; scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body { background: var(--fundo); color: var(--texto); font: 400 17px/1.6 var(--corpo); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--rosa); color: var(--rosa-escuro); }
+  .dentro { max-width: var(--largura); margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: var(--titulo); letter-spacing: -.028em; text-wrap: balance; }
+  h2 { font-weight: 800; font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; }
+  h3 { font-weight: 700; font-size: 23px; line-height: 1.15; letter-spacing: -.015em; }
+  .sub { color: var(--apagado); font-size: 19px; max-width: 54ch; margin-top: 18px; }
+  section { padding: 132px 0 0; }
 
-  /* régua de linha do tempo: a única decoração da página, tirada da tela do próprio programa */
-  .regua { height: 34px; margin: 0 -24px; position: relative; border-bottom: 1px solid var(--fio);
-    background: repeating-linear-gradient(90deg, var(--fio) 0 1px, transparent 1px 86px) 24px 22px / 100% 12px no-repeat,
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 17.2px) 24px 28px / 100% 6px no-repeat; }
-  .regua::after { content: ""; position: absolute; left: 110px; top: 0; bottom: -1px; width: 2px; background: var(--agulha); }
-  .regua::before { content: ""; position: absolute; left: 105px; top: 0; border: 6px solid transparent; border-top: 8px solid var(--agulha); }
+  /* grão de filme bem leve por cima de tudo */
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .05; mix-blend-mode: overlay;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-  header { padding: 56px 0 8px; }
-  .marca { font: 700 15px/1 "Bricolage Grotesque", sans-serif; display: flex; align-items: center; gap: 10px; color: var(--apagado); }
-  .marca i { width: 22px; height: 22px; border-radius: 5px; background: var(--rosa); display: grid; place-items: center; }
-  .marca svg { width: 13px; height: 13px; stroke: var(--rosa-escuro); fill: none; stroke-width: 2.4; stroke-linecap: round; }
-  h1 { font: 800 clamp(38px, 7vw, 64px)/1.02 "Bricolage Grotesque", sans-serif; letter-spacing: -.03em; margin: 28px 0 18px; max-width: 13ch; text-wrap: balance; }
-  .abre { font-size: 18px; color: var(--apagado); max-width: 56ch; }
+  /* topo: a régua do editor, com a agulha andando conforme a página rola */
+  .topo { position: fixed; inset: 0 0 auto 0; z-index: 50; backdrop-filter: blur(16px) saturate(1.3); background: rgba(13, 13, 15, .72); border-bottom: 1px solid var(--fio); }
+  .topo .dentro { height: 64px; display: flex; align-items: center; gap: 30px; }
+  .marca { font: 800 20px/1 var(--titulo); letter-spacing: -.03em; display: flex; align-items: center; gap: 10px; }
+  .marca i { width: 28px; height: 28px; border-radius: 8px; background: var(--rosa); display: grid; place-items: center; box-shadow: 0 6px 20px -4px rgba(236, 72, 153, .7); }
+  .marca svg { width: 15px; height: 15px; stroke: var(--rosa-escuro); fill: none; stroke-width: 2.6; stroke-linecap: round; }
+  .topo nav { display: flex; gap: 26px; margin-left: auto; font-size: 15px; color: var(--apagado); }
+  .topo nav a:hover { color: var(--texto); }
+  .regua { position: absolute; left: 0; right: 0; bottom: -1px; height: 6px; pointer-events: none;
+    background: repeating-linear-gradient(90deg, var(--fio2) 0 1px, transparent 1px 64px) 0 100% / 100% 6px no-repeat; }
+  .regua b { position: absolute; top: -3px; bottom: 0; width: 2px; left: calc(var(--rolagem, 0) * 100%); background: var(--agulha); box-shadow: 0 0 12px var(--agulha); }
+  .regua b::before { content: ""; position: absolute; left: -4px; top: -1px; border: 5px solid transparent; border-top: 6px solid var(--agulha); }
 
-  /* a escolha da placa: três clipes numa trilha; o escolhido ganha as alças de corte do editor */
-  .trilha { margin: 44px 0 0; background: var(--trilha); border: 1px solid var(--fio); border-radius: 6px; padding: 10px; }
-  .trilha legend { font: 700 20px/1.2 "Bricolage Grotesque", sans-serif; padding: 0 0 14px; float: left; width: 100%; }
-  .clipes { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 6px; clear: both; }
+  .botao { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 28px; border-radius: 12px; font: 700 17px/1 var(--titulo); letter-spacing: -.01em;
+    background: var(--rosa); color: var(--rosa-escuro); box-shadow: 0 14px 40px -12px rgba(236, 72, 153, .8), inset 0 1px 0 rgba(255, 255, 255, .45); transition: transform .15s, box-shadow .15s, background .15s; }
+  .botao:hover { transform: translateY(-2px); background: #f472b6; box-shadow: 0 20px 48px -12px rgba(236, 72, 153, .9), inset 0 1px 0 rgba(255, 255, 255, .5); }
+  .botao.calmo { background: transparent; color: var(--texto); box-shadow: inset 0 0 0 1px var(--fio2); }
+  .botao.calmo:hover { background: var(--painel); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); }
+  .botao.pequeno { height: 40px; padding: 0 18px; font-size: 15px; border-radius: 10px; }
+  .botao svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- abertura ---------- */
+  .abre { padding: 148px 0 0; position: relative; }
+  .abre::before { content: ""; position: absolute; left: 50%; top: 40px; width: 1100px; height: 760px; transform: translateX(-34%); pointer-events: none;
+    background: radial-gradient(closest-side, rgba(236, 72, 153, .26), rgba(236, 72, 153, .06) 55%, transparent); filter: blur(10px); }
+  .abre .dentro { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  h1 { font-weight: 800; font-size: clamp(46px, 7.2vw, 92px); line-height: .96; letter-spacing: -.045em; }
+  h1 span { display: block; color: var(--rosa-claro); }
+  .abre p { color: var(--apagado); font-size: 20px; max-width: 46ch; margin-top: 26px; }
+  .abre .acoes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .abre small { display: block; margin-top: 18px; color: var(--fraco); font-size: 14.500px; }
+
+  /* demonstração: a gravação deitada vira o Short em pé, com a legenda e a linha do tempo */
+  .demo { position: relative; display: grid; grid-template-columns: 1fr 34%; gap: 18px; align-items: end; }
+  .tela { position: relative; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px var(--fio2), 0 40px 90px -30px #000; }
+  .origem { aspect-ratio: 16 / 9; }
+  .cena { position: absolute; inset: 0; background: linear-gradient(#27306b 0%, #7a4f9a 38%, #e58aa0 58%, #f6c58f 66%, #2b3a2f 66.2%, #17201c 100%); overflow: hidden; }
+  .cena::before { content: ""; position: absolute; left: 61%; top: 37%; width: 13%; aspect-ratio: 1; border-radius: 50%; background: #ffe3b0; box-shadow: 0 0 60px 20px rgba(255, 214, 160, .55); }
+  .cena i { position: absolute; left: -4%; right: -4%; bottom: 33%; height: 30%; background: #2a2552; clip-path: polygon(0 100%, 0 62%, 9% 40%, 17% 58%, 28% 18%, 39% 52%, 47% 34%, 58% 62%, 70% 22%, 82% 56%, 91% 38%, 100% 60%, 100% 100%); }
+  .cena i + i { bottom: 31%; height: 20%; background: #1b2b33; clip-path: polygon(0 100%, 0 50%, 12% 70%, 22% 38%, 36% 66%, 50% 30%, 63% 62%, 77% 42%, 90% 68%, 100% 46%, 100% 100%); }
+  .cena u { position: absolute; left: 44%; bottom: 0; width: 12%; height: 34%; background: #2f3a35; clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); }
+  .cena em { position: absolute; left: 47.500%; bottom: 13%; width: 5%; aspect-ratio: 1 / 2.1; border-radius: 40% 40% 12% 12%; background: #f3d9c2; box-shadow: 0 -0.6em 0 -0.15em #caa27c, 0 0 0 2px rgba(0, 0, 0, .25); animation: anda 1.1s ease-in-out infinite alternate; }
+  .cena s { position: absolute; left: 3%; top: 5%; width: 13%; aspect-ratio: 1; border-radius: 6px; background: rgba(10, 14, 22, .7); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
+  .cena s::after { content: ""; position: absolute; left: 44%; top: 40%; width: 14%; aspect-ratio: 1; background: var(--rosa); transform: rotate(45deg); }
+  .cena b { position: absolute; left: 3%; bottom: 6%; width: 22%; height: 3.2%; border-radius: 4px; background: rgba(10, 14, 22, .7); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
+  .cena b::after { content: ""; position: absolute; inset: 2px; right: 34%; border-radius: 3px; background: var(--jogo); }
+  .webcam { position: absolute; right: 2.4%; top: 4%; width: 17%; aspect-ratio: 4 / 3; border-radius: 5px; overflow: hidden; background: linear-gradient(160deg, #3a2c26, #1f1a22); }
+  .webcam::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 100%; background: repeating-linear-gradient(90deg, transparent 0 9%, rgba(255, 190, 120, .18) 9% 12%, transparent 12% 16%, rgba(140, 170, 255, .16) 16% 19%); mask: linear-gradient(#000 0 42%, transparent 42%); }
+  .webcam::after { content: ""; position: absolute; left: 31%; bottom: -34%; width: 38%; aspect-ratio: 1 / 1.5; border-radius: 46% 46% 30% 30%; background: #e8b594; box-shadow: 0 0 0 .5em #2c3e73, 0 -1.1em 0 -.2em #3b2a22; }
+  .faz-jogo, .faz-cam { position: absolute; border: 2px solid var(--jogo); border-radius: 4px; }
+  .faz-jogo { left: 22%; top: 0; bottom: 0; width: 53.600%; animation: foca 9s ease-in-out infinite; }
+  .faz-cam { right: 2.400%; top: 4%; width: 17%; aspect-ratio: 4 / 3; border-color: var(--camera); }
+  .faz-jogo::before, .faz-cam::before { position: absolute; left: -2px; top: -1px; font: 700 10px/16px var(--corpo); padding: 0 6px; border-radius: 0 0 4px 0; color: #0b0c10; }
+  .faz-jogo::before { content: "Jogo"; background: var(--jogo); } .faz-cam::before { content: "Câmera"; background: var(--camera); top: auto; bottom: -1px; border-radius: 0 4px 0 0; }
+  .fone { aspect-ratio: 9 / 16; border-radius: 16px; box-shadow: 0 0 0 1px var(--fio2), 0 0 0 5px #1c1c20, 0 0 0 6px var(--fio2), 0 40px 90px -24px rgba(236, 72, 153, .45); }
+  .f-cam { position: absolute; inset: 0 0 61% 0; overflow: hidden; background: linear-gradient(160deg, #3a2c26, #1f1a22); }
+  .f-cam .webcam { inset: 0; width: auto; border-radius: 0; }
+  .f-jogo { position: absolute; inset: 39% 0 0 0; overflow: hidden; }
+  .f-jogo .cena { left: -41%; right: -45.600%; animation: foca-jogo 9s ease-in-out infinite; }
+  .legenda { position: absolute; left: 0; right: 0; top: 39%; transform: translateY(-50%); text-align: center; font: 800 clamp(15px, 2.3vw, 27px)/1.1 var(--titulo); letter-spacing: -.01em; text-shadow: 0 2px 0 #000, 0 0 12px rgba(0, 0, 0, .8); }
+  .legenda span { position: absolute; left: 0; right: 0; opacity: 0; animation: fala 9s steps(1) infinite; }
+  .legenda span:nth-child(2) { animation-delay: 3s; } .legenda span:nth-child(3) { animation-delay: 6s; }
+  .legenda mark { background: var(--rosa); color: #fff; border-radius: 5px; padding: 0 .28em; }
+  .mini { grid-column: 1 / -1; background: var(--painel); border: 1px solid var(--fio); border-radius: 10px; padding: 12px 14px 14px; position: relative; overflow: hidden; }
+  .mini .tc { font: 600 13px/1 Consolas, monospace; color: var(--agulha); letter-spacing: .04em; }
+  .onda { display: flex; align-items: center; gap: 2px; height: 34px; margin-top: 10px; }
+  .onda i { flex: 1; min-width: 1px; border-radius: 1px; background: #5d6a8a; }
+  .faixa { position: relative; height: 26px; margin-top: 8px; background: var(--chao); border-radius: 5px; }
+  .faixa b { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; background: rgba(236, 72, 153, .22); box-shadow: inset 0 0 0 1.500px var(--rosa); }
+  .faixa b.sel { background: var(--rosa); box-shadow: none; } .faixa b.sel::before, .faixa b.sel::after { content: ""; position: absolute; top: 5px; bottom: 5px; width: 2px; background: #fff; border-radius: 1px; }
+  .faixa b.sel::before { left: 3px; } .faixa b.sel::after { right: 3px; }
+  .mini .agulha { position: absolute; top: 30px; bottom: 8px; width: 2px; background: var(--agulha); left: 14px; animation: corre 9s linear infinite; box-shadow: 0 0 10px var(--agulha); }
+  @keyframes corre { from { left: 14px; } to { left: calc(100% - 16px); } }
+  @keyframes fala { 0% { opacity: 1; } 33.300% { opacity: 0; } }
+  @keyframes anda { from { transform: translateY(0); } to { transform: translateY(-6%); } }
+  @keyframes foca { 0%, 30%, 100% { left: 22%; } 45%, 85% { left: 30%; } }
+  @keyframes foca-jogo { 0%, 30%, 100% { transform: translateX(0); } 45%, 85% { transform: translateX(-8%); } }
+
+  /* ---------- como funciona ---------- */
+  .passos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 64px; counter-reset: passo; border-top: 1px solid var(--fio2); }
+  .passos li { list-style: none; padding: 30px 26px 0 0; position: relative; counter-increment: passo; }
+  .passos li + li { padding-left: 26px; border-left: 1px solid var(--fio); }
+  .passos li::before { content: counter(passo); position: absolute; top: -17px; left: 0; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 800 16px/1 var(--titulo); background: var(--fundo); color: var(--rosa-claro); box-shadow: inset 0 0 0 1.500px var(--rosa); }
+  .passos li + li::before { left: 26px; }
+  .passos p { color: var(--apagado); font-size: 16px; margin-top: 10px; }
+  .passos h3 { margin-top: 14px; }
+
+  /* ---------- recursos ---------- */
+  .grade { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-top: 60px; }
+  .cartao { grid-column: span 4; background: linear-gradient(180deg, #1a1a1f, #141418); border: 1px solid var(--fio); border-radius: 18px; padding: 28px; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+  .cartao.largo { grid-column: span 7; } .cartao.medio { grid-column: span 5; } .cartao.inteiro { grid-column: 1 / -1; }
+  .cartao p { color: var(--apagado); font-size: 16px; margin-top: 10px; max-width: 52ch; }
+  .figura { margin-top: 26px; }
+  .estilos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .estilos div { height: 66px; border-radius: 10px; background: #08080a; border: 1px solid var(--fio); display: grid; place-items: center; font: 800 17px/1 var(--titulo); letter-spacing: -.01em; }
+  .estilos .marca-leg mark { background: var(--rosa); color: #fff; border-radius: 4px; padding: 1px 6px; }
+  .estilos .neon { text-shadow: 0 0 10px var(--rosa), 0 0 3px var(--rosa); }
+  .estilos .caixa span { background: #fff; color: #111; border-radius: 4px; padding: 3px 8px; } .estilos .caixa b { color: var(--rosa); }
+  .estilos .frase b { color: #ffe14a; }
+  .notas { display: grid; gap: 11px; }
+  .notas div { display: grid; grid-template-columns: 78px 1fr 44px; align-items: center; gap: 12px; font-size: 14.500px; color: var(--apagado); }
+  .notas i { height: 7px; border-radius: 4px; background: var(--clipe); overflow: hidden; display: block; }
+  .notas i::after { content: ""; display: block; height: 100%; width: var(--v); background: var(--rosa); border-radius: 4px; }
+  .nota-g { position: absolute; right: 28px; top: 26px; font: 800 44px/1 var(--titulo); color: var(--jogo); letter-spacing: -.04em; }
+  .quadro { display: flex; gap: 14px; align-items: center; }
+  .quadro .q16 { flex: 1; aspect-ratio: 16 / 9; border-radius: 8px; background: #23232a; position: relative; }
+  .quadro .q16 b { position: absolute; inset: 0 26% 0 22%; border: 2px solid var(--jogo); border-radius: 4px; }
+  .quadro .q16 u { position: absolute; right: 4%; top: 7%; width: 20%; aspect-ratio: 4 / 3; border: 2px solid var(--camera); border-radius: 3px; }
+  .quadro .q9 { width: 23%; aspect-ratio: 9 / 16; border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: 39% 1fr; }
+  .quadro .q9 u { background: rgba(138, 160, 255, .3); box-shadow: inset 0 0 0 2px var(--camera); } .quadro .q9 b { background: rgba(52, 211, 153, .22); box-shadow: inset 0 0 0 2px var(--jogo); }
+  .looks { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .looks i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(160deg, #27306b, #e58aa0 60%, #f6c58f); }
+  .looks i:nth-child(2) { filter: saturate(1.7) contrast(1.1); } .looks i:nth-child(3) { filter: sepia(.7) contrast(1.1); } .looks i:nth-child(4) { filter: grayscale(1) contrast(1.2); }
+  .looks i:nth-child(5) { filter: hue-rotate(150deg) saturate(1.3); } .looks i:nth-child(6) { filter: hue-rotate(-50deg) saturate(1.6) brightness(.9); }
+  .duas-ondas { display: grid; gap: 8px; }
+  .duas-ondas .onda { margin: 0; height: 30px; } .duas-ondas .onda.voz i { background: var(--rosa-claro); } .duas-ondas .onda.game i { background: #4b5878; }
+  .duas-ondas small { font-size: 13px; color: var(--fraco); }
+  .barras { display: flex; align-items: end; gap: 8px; height: 92px; }
+  .barras i { flex: 1; border-radius: 5px 5px 0 0; background: var(--clipe); height: var(--h); } .barras i.melhor { background: var(--jogo); }
+  .teclas { display: flex; flex-wrap: wrap; gap: 8px; }
+  kbd { font: 600 14px/1 Consolas, monospace; min-width: 36px; height: 36px; padding: 0 10px; display: inline-grid; place-items: center; border-radius: 8px; background: var(--clipe); border: 1px solid var(--fio2); border-bottom-width: 3px; color: var(--texto); }
+  .medida { margin-top: 16px; padding: 30px 32px; border-radius: 18px; border: 1px solid var(--fio); background: var(--chao); display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; }
+  .medida strong { font: 800 clamp(40px, 6vw, 72px)/1 var(--titulo); letter-spacing: -.04em; color: var(--rosa-claro); white-space: nowrap; }
+  .medida p { color: var(--apagado); max-width: 60ch; }
+
+  /* ---------- privacidade ---------- */
+  .local { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .local ul { list-style: none; padding: 0; display: grid; gap: 22px; }
+  .local li { padding-left: 34px; position: relative; color: var(--apagado); }
+  .local li strong { color: var(--texto); font-weight: 600; display: block; }
+  .local li::before { content: ""; position: absolute; left: 0; top: 7px; width: 18px; height: 10px; border-left: 2.500px solid var(--jogo); border-bottom: 2.500px solid var(--jogo); transform: rotate(-45deg) scale(.82); transform-origin: left; }
+
+  /* ---------- baixar: três clipes numa trilha; o escolhido ganha as alças de corte ---------- */
+  .baixar-cx { margin-top: 56px; background: var(--painel); border: 1px solid var(--fio2); border-radius: 20px; padding: 14px; position: relative; box-shadow: 0 50px 120px -50px rgba(236, 72, 153, .55); }
+  fieldset { border: 0; padding: 0; min-width: 0; }
+  legend { font: 700 22px/1.2 var(--titulo); letter-spacing: -.015em; padding: 12px 12px 18px; }
+  .clipes { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 8px; }
   .clipe { position: relative; }
-  .clipe input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
-  .clipe span { display: block; background: var(--clipe); border-radius: 4px; padding: 16px 18px 15px; min-height: 104px; border: 1px solid transparent; transition: background .15s, color .15s; }
-  .clipe b { display: block; font: 800 26px/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.02em; }
-  .clipe small { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.35; color: var(--apagado); }
-  .clipe input:hover + span { background: #2e2e34; }
+  .clipe input { position: absolute; opacity: 0; inset: 0; cursor: pointer; z-index: 1; }
+  .clipe span { display: block; background: var(--clipe); border-radius: 10px; padding: 22px 24px 20px; min-height: 128px; transition: background .15s, color .15s, transform .15s; }
+  .clipe b { display: block; font: 800 32px/1 var(--titulo); letter-spacing: -.03em; }
+  .clipe small { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: var(--apagado); }
+  .clipe input:hover + span { background: #2d2d34; }
   .clipe input:checked + span { background: var(--rosa); color: var(--rosa-escuro); }
-  .clipe input:checked + span small { color: rgba(26, 6, 17, .78); }
-  .clipe input:checked + span::before, .clipe input:checked + span::after { content: ""; position: absolute; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: #fff; }
-  .clipe input:checked + span::before { left: 5px; } .clipe input:checked + span::after { right: 5px; }
+  .clipe input:checked + span small { color: rgba(26, 6, 17, .8); }
+  .clipe input:checked + span::before, .clipe input:checked + span::after { content: ""; position: absolute; top: 18px; bottom: 18px; width: 3px; border-radius: 2px; background: #fff; }
+  .clipe input:checked + span::before { left: 7px; } .clipe input:checked + span::after { right: 7px; }
   .clipe input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+  .pegar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; padding: 22px 12px 10px; }
+  .pegar .botao[aria-disabled="true"] { background: var(--clipe); color: var(--apagado); box-shadow: none; pointer-events: none; }
+  .arquivo { font-size: 15px; color: var(--apagado); line-height: 1.45; } .arquivo strong { color: var(--texto); font-weight: 600; display: block; }
+  .palpite { padding: 0 12px 8px; font-size: 14.500px; color: var(--fraco); }
+  .direto { margin-top: 18px; font-size: 14.500px; color: var(--fraco); } .direto a { color: var(--apagado); text-decoration: underline; text-underline-offset: 3px; } .direto a:hover { color: var(--texto); }
 
-  .baixar { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; padding: 16px 8px 8px; }
-  .botao { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px; border-radius: 6px; background: var(--texto); color: #131315; font: 700 17px/1 "Bricolage Grotesque", sans-serif; text-decoration: none; }
-  .botao[aria-disabled="true"] { background: var(--clipe); color: var(--apagado); pointer-events: none; }
-  .botao:hover { background: #fff; }
-  .arquivo { font-size: 14px; color: var(--apagado); line-height: 1.45; }
-  .arquivo strong { color: var(--texto); font-weight: 600; display: block; }
-  .palpite { margin: 12px 8px 0; font-size: 14px; color: var(--apagado); }
+  /* ---------- perguntas ---------- */
+  .perguntas { margin-top: 48px; border-top: 1px solid var(--fio2); max-width: 860px; }
+  details { border-bottom: 1px solid var(--fio); }
+  summary { list-style: none; cursor: pointer; padding: 22px 44px 22px 0; font: 700 20px/1.25 var(--titulo); letter-spacing: -.012em; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: ""; position: absolute; right: 6px; top: 50%; width: 11px; height: 11px; border-right: 2px solid var(--apagado); border-bottom: 2px solid var(--apagado); transform: translateY(-70%) rotate(45deg); transition: transform .2s; }
+  details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+  details p { color: var(--apagado); padding: 0 0 24px; max-width: 66ch; }
 
-  section { margin-top: 64px; max-width: 62ch; }
-  h2 { font: 700 26px/1.15 "Bricolage Grotesque", sans-serif; letter-spacing: -.015em; margin-bottom: 14px; }
-  p + p { margin-top: 12px; }
-  .apagado { color: var(--apagado); }
-  ol { padding-left: 22px; } ol li { margin-top: 10px; padding-left: 6px; } ol li::marker { color: var(--rosa); font-weight: 700; }
-  kbd { font: 600 13px/1 Consolas, monospace; border: 1px solid var(--fio); border-bottom-width: 2px; border-radius: 4px; padding: 3px 6px; background: var(--trilha); }
-  footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--fio); font-size: 14px; color: var(--apagado); }
-  @media (max-width: 640px) { .clipes { grid-template-columns: 1fr; } .clipe span { min-height: 0; } h1 { margin-top: 22px; } header { padding-top: 40px; } }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  footer { margin-top: 140px; border-top: 1px solid var(--fio); padding: 34px 0 60px; color: var(--fraco); font-size: 14.500px; }
+  footer .dentro { display: flex; flex-wrap: wrap; gap: 14px 30px; align-items: center; } footer .marca { font-size: 17px; color: var(--apagado); }
+
+  @media (max-width: 1000px) {
+    .abre .dentro { grid-template-columns: 1fr; gap: 54px; } .abre::before { transform: translateX(-50%); }
+    .passos { grid-template-columns: 1fr 1fr; row-gap: 46px; } .passos li:nth-child(3) { border-left: 0; padding-left: 0; } .passos li:nth-child(3)::before { left: 0; }
+    .passos li:nth-child(n+3) { border-top: 1px solid var(--fio2); }
+    .cartao, .cartao.largo, .cartao.medio { grid-column: span 6; } .local { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 16px; } .dentro { padding: 0 20px; } section { padding-top: 96px; } .abre { padding-top: 116px; }
+    .topo nav a:not(.botao) { display: none; } .topo .dentro { gap: 14px; }
+    .passos { grid-template-columns: 1fr; } .passos li, .passos li + li { border-left: 0; padding-left: 0; border-top: 1px solid var(--fio2); } .passos li + li::before { left: 0; } .passos { border-top: 0; }
+    .cartao, .cartao.largo, .cartao.medio { grid-column: 1 / -1; padding: 24px; } .clipes { grid-template-columns: 1fr; } .clipe span { min-height: 0; }
+    .medida { grid-template-columns: 1fr; gap: 12px; } .nota-g { font-size: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } .legenda span:first-child { opacity: 1; } }
 </style>
 </head>
 <body>
-<div class="pagina">
-  <div class="regua" aria-hidden="true"></div>
-  <header>
-    <div class="marca"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</div>
-    <h1>Sua gameplay vira Short sem sair do seu PC</h1>
-    <p class="abre">O Cortes acha os melhores momentos da gravação do OBS, enquadra a câmera e o jogo, põe legenda e exporta. Tudo roda na sua máquina: o vídeo não é enviado para lugar nenhum.</p>
-  </header>
 
-  <form>
-    <fieldset class="trilha">
-      <legend>Qual é a placa de vídeo do seu PC?</legend>
-      <div class="clipes">
-        <label class="clipe"><input type="radio" name="placa" value="nvidia"><span><b>NVIDIA</b><small>GeForce GTX ou RTX. A transcrição da fala roda na placa.</small></span></label>
-        <label class="clipe"><input type="radio" name="placa" value="amd"><span><b>AMD</b><small>Radeon. A transcrição roda no processador.</small></span></label>
-        <label class="clipe"><input type="radio" name="placa" value="intel"><span><b>Intel</b><small>Arc, vídeo integrado ou PC sem placa.</small></span></label>
+<header class="topo">
+  <div class="dentro">
+    <a class="marca" href="#" aria-label="Cortes, início"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</a>
+    <nav aria-label="Seções">
+      <a href="#como">Como funciona</a><a href="#recursos">Recursos</a><a href="#perguntas">Perguntas</a>
+      <a class="botao pequeno" href="#baixar">Baixar</a>
+    </nav>
+  </div>
+  <div class="regua" aria-hidden="true"><b></b></div>
+</header>
+
+<main>
+  <div class="abre">
+    <div class="dentro">
+      <div>
+        <h1>Grave no OBS.<span>Publique Shorts.</span></h1>
+        <p>O Cortes encontra os melhores momentos da sua gameplay, enquadra a câmera e o jogo, põe legenda e exporta. Roda inteiro no seu PC.</p>
+        <div class="acoes">
+          <a class="botao" href="#baixar"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para Windows</a>
+          <a class="botao calmo" href="#como">Ver como funciona</a>
+        </div>
+        <small>Windows 10 e 11. Placa NVIDIA, AMD ou Intel.</small>
       </div>
-      <div class="baixar">
-        <a class="botao" id="botao" aria-disabled="true" href="#">Escolha a placa acima</a>
-        <div class="arquivo" id="arquivo" aria-live="polite"></div>
+
+      <div class="demo" aria-hidden="true">
+        <div class="tela origem">
+          <div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div>
+          <div class="webcam"></div>
+          <div class="faz-jogo"></div><div class="faz-cam"></div>
+        </div>
+        <div class="tela fone">
+          <div class="f-jogo"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div>
+          <div class="f-cam"><div class="webcam"></div></div>
+          <div class="legenda"><span>OLHA <mark>ISSO</mark></span><span>NÃO <mark>ACREDITO</mark></span><span>QUE <mark>SUSTO</mark></span></div>
+        </div>
+        <div class="mini">
+          <span class="tc">00:12:07</span>
+          <div class="onda" data-onda="72"></div>
+          <div class="faixa"><b style="left:6%;width:11%"></b><b class="sel" style="left:31%;width:14%"></b><b style="left:58%;width:9%"></b><b style="left:79%;width:12%"></b></div>
+          <i class="agulha"></i>
+        </div>
       </div>
-      <p class="palpite" id="palpite" hidden></p>
-    </fieldset>
-  </form>
+    </div>
+  </div>
 
-  <section>
-    <h2>Não sabe qual é a sua?</h2>
-    <p>Aperte <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Esc</kbd>, abra a aba Desempenho e clique em GPU. O nome da placa aparece no canto de cima da janela.</p>
-    <p class="apagado">Se o PC tiver duas (uma integrada e uma dedicada), vale a dedicada.</p>
+  <section id="como">
+    <div class="dentro">
+      <h2>Do arquivo do OBS ao Short pronto</h2>
+      <p class="sub">Quatro passos, e só o terceiro pede a sua mão.</p>
+      <ol class="passos">
+        <li><h3>Abra a gravação</h3><p>O Cortes lê a pasta onde o OBS salva e mostra cada gravação, com miniatura e duração.</p></li>
+        <li><h3>Ele acha os momentos</h3><p>Transcreve a fala, mede risada, grito e reação, e a IA que roda no seu PC dá nota a cada trecho.</p></li>
+        <li><h3>Você dá o acabamento</h3><p>Enquadramento, legenda, efeitos e áudio, numa linha do tempo com os atalhos que você já conhece.</p></li>
+        <li><h3>Exporte e envie</h3><p>Shorts em pé ou vídeo deitado, até 4K. Dá para mandar direto ao YouTube como privado, público ou agendado.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="recursos">
+    <div class="dentro">
+      <h2>O que ele faz por você</h2>
+      <p class="sub">Tudo que um Short de gameplay precisa, sem abrir outro programa.</p>
+      <div class="grade">
+        <article class="cartao largo">
+          <h3>Câmera em cima, jogo embaixo</h3>
+          <p>O Cortes acha a sua webcam na gravação e monta o quadro em pé. Arraste as áreas para escolher o que aparece, com zoom na câmera e no jogo.</p>
+          <div class="figura quadro"><div class="q16"><b></b><u></u></div><div class="q9"><u></u><b></b></div></div>
+        </article>
+        <article class="cartao medio">
+          <h3>Momentos com nota</h3>
+          <p>Cada trecho mostra por que foi escolhido.</p>
+          <span class="nota-g">87</span>
+          <div class="figura notas">
+            <div>Risada<i style="--v:82%"></i>alta</div><div>Reação<i style="--v:64%"></i>média</div><div>Volume<i style="--v:91%"></i>alta</div><div>Ritmo<i style="--v:47%"></i>média</div>
+          </div>
+        </article>
+        <article class="cartao">
+          <h3>Legenda que você edita</h3>
+          <p>Sete estilos, palavra por palavra no tempo certo. Corrija o texto linha por linha.</p>
+          <div class="figura estilos"><div class="marca-leg">OLHA&nbsp;<mark>ISSO</mark></div><div class="neon">OLHA ISSO</div><div class="caixa"><span>OLHA <b>ISSO</b></span></div><div class="frase">OLHA&nbsp;<b>ISSO</b></div></div>
+        </article>
+        <article class="cartao">
+          <h3>Efeitos e transições</h3>
+          <p>12 filtros de cor, 41 transições, desfoque em qualquer área, imagens e memes por cima do vídeo.</p>
+          <div class="figura looks"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="cartao">
+          <h3>Sua voz separada do jogo</h3>
+          <p>Volume da voz e do jogo independentes, bip nos palavrões, corte de silêncio e sons numa trilha própria.</p>
+          <div class="figura duas-ondas"><div class="onda voz" data-onda="46" data-s="7"></div><small>Sua voz</small><div class="onda game" data-onda="46" data-s="3"></div><small>Som do jogo</small></div>
+        </article>
+        <article class="cartao medio">
+          <h3>Aprende com o seu canal</h3>
+          <p>Conecte o YouTube e o Cortes lê o desempenho dos seus Shorts. As notas passam a puxar para a duração que rende mais com o seu público.</p>
+          <div class="figura barras"><i style="--h:38%"></i><i class="melhor" style="--h:100%"></i><i style="--h:72%"></i><i style="--h:44%"></i><i style="--h:26%"></i><i style="--h:18%"></i></div>
+        </article>
+        <article class="cartao largo">
+          <h3>Atalhos de editor de verdade</h3>
+          <p>Quem vem do CapCut ou do Premiere já sai editando: dividir, apagar, desfazer, andar quadro a quadro, copiar e colar.</p>
+          <div class="figura teclas"><kbd>Espaço</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>S</kbd><kbd>Del</kbd><kbd>Ctrl</kbd><kbd>Z</kbd><kbd>I</kbd><kbd>O</kbd><kbd>?</kbd></div>
+        </article>
+      </div>
+      <div class="medida">
+        <strong>35 segundos</strong>
+        <p>É o tempo para analisar uma gravação de 38 minutos numa RTX 5060 Ti: transcrição completa e momentos sugeridos. Seis Shorts em 1440p saem em 42 segundos. Em outras placas o tempo muda.</p>
+      </div>
+    </div>
   </section>
 
   <section>
-    <h2>O que muda de um instalador para o outro</h2>
-    <p>O da NVIDIA leva junto as bibliotecas que fazem a transcrição da fala rodar na placa, por isso ele é maior e a análise é bem mais rápida. O outro faz a mesma coisa pelo processador: o resultado é igual, só demora mais.</p>
-    <p>A exportação dos vídeos usa a placa nos três casos.</p>
+    <div class="dentro local">
+      <div>
+        <h2>Seu vídeo não sai do seu PC</h2>
+        <p class="sub">A gravação é sua. O Cortes trabalha em cima do arquivo que já está no seu disco.</p>
+      </div>
+      <ul>
+        <li><strong>Nada é enviado para servidor nenhum</strong>A transcrição, a IA que escolhe os momentos e a exportação rodam na sua máquina.</li>
+        <li><strong>Funciona sem internet</strong>Depois da primeira análise, que baixa o modelo de transcrição, só o YouTube e as atualizações usam a rede, e só quando você pede.</li>
+        <li><strong>A análise é opcional</strong>Quer só cortar e exportar à mão? Abra a gravação e edite direto.</li>
+      </ul>
+    </div>
   </section>
 
-  <section>
-    <h2>Para instalar</h2>
-    <ol>
-      <li>Abra o arquivo baixado. O Windows pode mostrar "O Windows protegeu o computador", porque o programa ainda não tem assinatura digital. Clique em Mais informações e depois em Executar assim mesmo.</li>
-      <li>Para a IA escolher os momentos sozinha, deixe marcada a opção Instalar a IA local.</li>
-      <li>Abra o Cortes pelo atalho da área de trabalho e escolha a pasta onde o OBS salva as gravações.</li>
-    </ol>
-    <p class="apagado" style="margin-top:14px">Precisa de Windows 10 ou 11 de 64 bits. Na primeira análise o Cortes baixa o modelo de transcrição, de 1,6 GB, uma vez só.</p>
+  <section id="baixar">
+    <div class="dentro">
+      <h2>Baixe o instalador da sua placa</h2>
+      <p class="sub">São dois instaladores. O da NVIDIA leva as bibliotecas que fazem a transcrição rodar na placa; o outro transcreve pelo processador.</p>
+      <form class="baixar-cx">
+        <fieldset>
+          <legend>Qual é a placa de vídeo do seu PC?</legend>
+          <div class="clipes">
+            <label class="clipe"><input type="radio" name="placa" value="nvidia"><span><b>NVIDIA</b><small>GeForce GTX ou RTX. Análise mais rápida.</small></span></label>
+            <label class="clipe"><input type="radio" name="placa" value="amd"><span><b>AMD</b><small>Radeon. Exporta pela placa.</small></span></label>
+            <label class="clipe"><input type="radio" name="placa" value="intel"><span><b>Intel</b><small>Arc, vídeo integrado ou PC sem placa.</small></span></label>
+          </div>
+          <div class="pegar">
+            <a class="botao" id="botao" aria-disabled="true" href="#baixar">Escolha a placa acima</a>
+            <div class="arquivo" id="arquivo" aria-live="polite"></div>
+          </div>
+          <p class="palpite" id="palpite" hidden></p>
+        </fieldset>
+      </form>
+      <p class="direto">Não sabe qual é a sua? Aperte Ctrl + Shift + Esc, abra Desempenho e clique em GPU. Links diretos:
+        <a href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup-NVIDIA.exe">NVIDIA (1,2 GB)</a> e
+        <a href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup-AMD-Intel.exe">AMD ou Intel (226 MB)</a>.</p>
+    </div>
   </section>
 
-  <section>
-    <h2>Já tem o Cortes?</h2>
-    <p>Não precisa baixar de novo. No programa, abra Configurações, vá em Atualização e clique em Procurar atualização: ele baixa só o que mudou e mantém as suas gravações, a galeria e as configurações.</p>
+  <section id="perguntas">
+    <div class="dentro">
+      <h2>Antes de instalar</h2>
+      <div class="perguntas">
+        <details><summary>O Windows disse que o programa é desconhecido. E agora?</summary><p>O instalador ainda não tem assinatura digital, então o Windows mostra "O Windows protegeu o computador". Clique em Mais informações e depois em Executar assim mesmo.</p></details>
+        <details><summary>Funciona sem placa NVIDIA?</summary><p>Funciona. Em placas AMD e Intel a exportação usa a placa normalmente; só a transcrição da fala roda no processador, e por isso a análise demora mais. O resultado é o mesmo.</p></details>
+        <details><summary>Quanto espaço ele ocupa?</summary><p>O instalador da NVIDIA tem 1,2 GB e o de AMD ou Intel, 226 MB. Na primeira análise o Cortes baixa o modelo de transcrição, de 1,6 GB, uma vez só. A IA local é opcional e ocupa de 5 a 9 GB, conforme o modelo.</p></details>
+        <details><summary>Como recebo as atualizações?</summary><p>Pelo próprio programa: Configurações, Atualização, Procurar atualização. Ele baixa só o que mudou, cerca de 27 MB, e mantém as suas gravações analisadas, a galeria e as configurações.</p></details>
+        <details><summary>Preciso conectar o YouTube?</summary><p>Não. Conectar serve para duas coisas opcionais: o Cortes ler o desempenho dos seus Shorts e você enviar os vídeos sem abrir o Studio. O Google mostra um aviso de app não verificado no login; clique em Avançado para continuar.</p></details>
+      </div>
+    </div>
   </section>
+</main>
 
-  <footer id="rodape">Versão de teste para convidados.</footer>
-</div>
+<footer>
+  <div class="dentro">
+    <span class="marca"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</span>
+    <span id="rodape">Versão de teste.</span>
+  </div>
+</footer>
 
 <script>
+  // ondas de áudio desenhadas por conta (sempre iguais, sem sorteio a cada visita)
+  for (const el of document.querySelectorAll("[data-onda]")) {
+    let s = +(el.dataset.s || 5), h = "";
+    for (let i = 0; i < +el.dataset.onda; i++) { s = (s * 9301 + 49297) % 233280; const v = s / 233280; h += '<i style="height:' + Math.round(14 + 86 * Math.pow(v, 1.6) * (0.55 + 0.45 * Math.sin(i / 3.1) ** 2)) + '%"></i>'; }
+    el.innerHTML = h;
+  }
+
+  // a agulha da régua do topo acompanha a rolagem da página
+  const raiz = document.documentElement;
+  const rolar = () => raiz.style.setProperty("--rolagem", Math.min(1, scrollY / Math.max(1, raiz.scrollHeight - innerHeight)).toFixed(4));
+  addEventListener("scroll", rolar, { passive: true }); addEventListener("resize", rolar); rolar();
+
+  // escolha da placa
   const BASE = "https://github.com/FrankSilva01/cortes-app/releases/latest/download/";
   const ARQ = { nvidia: ["CortesSetup-NVIDIA.exe", "1,2 GB", "NVIDIA"], amd: ["CortesSetup-AMD-Intel.exe", "226 MB", "AMD"], intel: ["CortesSetup-AMD-Intel.exe", "226 MB", "Intel"] };
   const botao = document.getElementById("botao"), arquivo = document.getElementById("arquivo");
-
   function escolher(placa) {
     const [nome, tamanho, rotulo] = ARQ[placa];
     botao.href = BASE + nome;
     botao.removeAttribute("aria-disabled");
-    botao.textContent = "Baixar para " + rotulo;
+    botao.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para ' + rotulo;
     arquivo.innerHTML = "<strong>" + nome + "</strong>" + tamanho + ", para Windows 10 ou 11";
   }
   for (const r of document.querySelectorAll("input[name=placa]")) r.addEventListener("change", () => escolher(r.value));
 
-  // palpite pela placa que o navegador informa (lido só aqui, não é enviado a ninguém); a pessoa confirma ou troca
+  // palpite pela placa que o navegador informa (lido só aqui, não é enviado a ninguém)
   try {
     const gl = document.createElement("canvas").getContext("webgl");
     const ext = gl && gl.getExtension("WEBGL_debug_renderer_info");
@@ -154,11 +432,10 @@
     }
   } catch (e) { /* sem palpite: a pessoa escolhe */ }
 
-  // número e data da versão mais nova, direto da página de versões
+  // número e data da versão mais nova
   fetch("https://api.github.com/repos/FrankSilva01/cortes-app/releases/latest").then((r) => (r.ok ? r.json() : null)).then((d) => {
     if (!d || !d.tag_name) return;
-    const dia = new Date(d.published_at).toLocaleDateString("pt-BR");
-    document.getElementById("rodape").textContent = "Cortes " + d.tag_name.replace(/^v/, "") + ", publicado em " + dia + ". Versão de teste para convidados.";
+    document.getElementById("rodape").textContent = "Versão " + d.tag_name.replace(/^v/, "") + ", publicada em " + new Date(d.published_at).toLocaleDateString("pt-BR") + ". Versão de teste.";
   }).catch(() => {});
 </script>
 </body>
