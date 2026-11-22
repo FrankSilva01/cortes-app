@@ -85,7 +85,8 @@
   .cena b { position: absolute; left: 3%; bottom: 6%; width: 22%; height: 3.2%; border-radius: 4px; background: rgba(10, 14, 22, .7); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
   .cena b::after { content: ""; position: absolute; inset: 2px; right: 34%; border-radius: 3px; background: var(--jogo); }
   .webcam { position: absolute; right: 2.4%; top: 4%; width: 17%; aspect-ratio: 4 / 3; border-radius: 5px; overflow: hidden; background: linear-gradient(160deg, #3a2c26, #1f1a22); }
-  .webcam::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 100%; background: repeating-linear-gradient(90deg, transparent 0 9%, rgba(255, 190, 120, .18) 9% 12%, transparent 12% 16%, rgba(140, 170, 255, .16) 16% 19%); mask: linear-gradient(#000 0 42%, transparent 42%); }
+  .webcam::before { content: ""; position: absolute; left: 7%; right: 7%; top: 9%; height: 22%; border-bottom: 2px solid rgba(255, 255, 255, .16); border-radius: 2px;
+    background: repeating-linear-gradient(90deg, rgba(255, 190, 120, .4) 0 5%, transparent 5% 7%, rgba(140, 170, 255, .34) 7% 11%, transparent 11% 13%, rgba(236, 72, 153, .34) 13% 16%, transparent 16% 20%); }
   .webcam::after { content: ""; position: absolute; left: 31%; bottom: -34%; width: 38%; aspect-ratio: 1 / 1.5; border-radius: 46% 46% 30% 30%; background: #e8b594; box-shadow: 0 0 0 .5em #2c3e73, 0 -1.1em 0 -.2em #3b2a22; }
   .faz-jogo, .faz-cam { position: absolute; border: 2px solid var(--jogo); border-radius: 4px; }
   .faz-jogo { left: 22%; top: 0; bottom: 0; width: 53.600%; animation: foca 9s ease-in-out infinite; }
