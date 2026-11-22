@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baixar o Cortes</title>
+<meta name="description" content="Cortes transforma gravações de gameplay em Shorts prontos, no seu PC. Escolha a sua placa de vídeo e baixe o instalador certo.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #131315; --trilha: #1b1b1e; --clipe: #26262b; --fio: rgba(255, 255, 255, .1);
+    --texto: #ededf0; --apagado: #9c9ca6; --rosa: #ec4899; --rosa-escuro: #1a0611; --agulha: #6ea8ff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { color-scheme: dark; }
+  body { background: var(--fundo); color: var(--texto); font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+  .pagina { max-width: 860px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* régua de linha do tempo: a única decoração da página, tirada da tela do próprio programa */
+  .regua { height: 34px; margin: 0 -24px; position: relative; border-bottom: 1px solid var(--fio);
+    background: repeating-linear-gradient(90deg, var(--fio) 0 1px, transparent 1px 86px) 24px 22px / 100% 12px no-repeat,
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 17.2px) 24px 28px / 100% 6px no-repeat; }
+  .regua::after { content: ""; position: absolute; left: 110px; top: 0; bottom: -1px; width: 2px; background: var(--agulha); }
+  .regua::before { content: ""; position: absolute; left: 105px; top: 0; border: 6px solid transparent; border-top: 8px solid var(--agulha); }
+
+  header { padding: 56px 0 8px; }
+  .marca { font: 700 15px/1 "Bricolage Grotesque", sans-serif; display: flex; align-items: center; gap: 10px; color: var(--apagado); }
+  .marca i { width: 22px; height: 22px; border-radius: 5px; background: var(--rosa); display: grid; place-items: center; }
+  .marca svg { width: 13px; height: 13px; stroke: var(--rosa-escuro); fill: none; stroke-width: 2.4; stroke-linecap: round; }
+  h1 { font: 800 clamp(38px, 7vw, 64px)/1.02 "Bricolage Grotesque", sans-serif; letter-spacing: -.03em; margin: 28px 0 18px; max-width: 13ch; text-wrap: balance; }
+  .abre { font-size: 18px; color: var(--apagado); max-width: 56ch; }
+
+  /* a escolha da placa: três clipes numa trilha; o escolhido ganha as alças de corte do editor */
+  .trilha { margin: 44px 0 0; background: var(--trilha); border: 1px solid var(--fio); border-radius: 6px; padding: 10px; }
+  .trilha legend { font: 700 20px/1.2 "Bricolage Grotesque", sans-serif; padding: 0 0 14px; float: left; width: 100%; }
+  .clipes { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 6px; clear: both; }
+  .clipe { position: relative; }
+  .clipe input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .clipe span { display: block; background: var(--clipe); border-radius: 4px; padding: 16px 18px 15px; min-height: 104px; border: 1px solid transparent; transition: background .15s, color .15s; }
+  .clipe b { display: block; font: 800 26px/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.02em; }
+  .clipe small { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.35; color: var(--apagado); }
+  .clipe input:hover + span { background: #2e2e34; }
+  .clipe input:checked + span { background: var(--rosa); color: var(--rosa-escuro); }
+  .clipe input:checked + span small { color: rgba(26, 6, 17, .78); }
+  .clipe input:checked + span::before, .clipe input:checked + span::after { content: ""; position: absolute; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: #fff; }
+  .clipe input:checked + span::before { left: 5px; } .clipe input:checked + span::after { right: 5px; }
+  .clipe input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+
+  .baixar { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; padding: 16px 8px 8px; }
+  .botao { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px; border-radius: 6px; background: var(--texto); color: #131315; font: 700 17px/1 "Bricolage Grotesque", sans-serif; text-decoration: none; }
+  .botao[aria-disabled="true"] { background: var(--clipe); color: var(--apagado); pointer-events: none; }
+  .botao:hover { background: #fff; }
+  .arquivo { font-size: 14px; color: var(--apagado); line-height: 1.45; }
+  .arquivo strong { color: var(--texto); font-weight: 600; display: block; }
+  .palpite { margin: 12px 8px 0; font-size: 14px; color: var(--apagado); }
+
+  section { margin-top: 64px; max-width: 62ch; }
+  h2 { font: 700 26px/1.15 "Bricolage Grotesque", sans-serif; letter-spacing: -.015em; margin-bottom: 14px; }
+  p + p { margin-top: 12px; }
+  .apagado { color: var(--apagado); }
+  ol { padding-left: 22px; } ol li { margin-top: 10px; padding-left: 6px; } ol li::marker { color: var(--rosa); font-weight: 700; }
+  kbd { font: 600 13px/1 Consolas, monospace; border: 1px solid var(--fio); border-bottom-width: 2px; border-radius: 4px; padding: 3px 6px; background: var(--trilha); }
+  footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--fio); font-size: 14px; color: var(--apagado); }
+  @media (max-width: 640px) { .clipes { grid-template-columns: 1fr; } .clipe span { min-height: 0; } h1 { margin-top: 22px; } header { padding-top: 40px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <div class="regua" aria-hidden="true"></div>
+  <header>
+    <div class="marca"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</div>
+    <h1>Sua gameplay vira Short sem sair do seu PC</h1>
+    <p class="abre">O Cortes acha os melhores momentos da gravação do OBS, enquadra a câmera e o jogo, põe legenda e exporta. Tudo roda na sua máquina: o vídeo não é enviado para lugar nenhum.</p>
+  </header>
+
+  <form>
+    <fieldset class="trilha">
+      <legend>Qual é a placa de vídeo do seu PC?</legend>
+      <div class="clipes">
+        <label class="clipe"><input type="radio" name="placa" value="nvidia"><span><b>NVIDIA</b><small>GeForce GTX ou RTX. A transcrição da fala roda na placa.</small></span></label>
+        <label class="clipe"><input type="radio" name="placa" value="amd"><span><b>AMD</b><small>Radeon. A transcrição roda no processador.</small></span></label>
+        <label class="clipe"><input type="radio" name="placa" value="intel"><span><b>Intel</b><small>Arc, vídeo integrado ou PC sem placa.</small></span></label>
+      </div>
+      <div class="baixar">
+        <a class="botao" id="botao" aria-disabled="true" href="#">Escolha a placa acima</a>
+        <div class="arquivo" id="arquivo" aria-live="polite"></div>
+      </div>
+      <p class="palpite" id="palpite" hidden></p>
+    </fieldset>
+  </form>
+
+  <section>
+    <h2>Não sabe qual é a sua?</h2>
+    <p>Aperte <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Esc</kbd>, abra a aba Desempenho e clique em GPU. O nome da placa aparece no canto de cima da janela.</p>
+    <p class="apagado">Se o PC tiver duas (uma integrada e uma dedicada), vale a dedicada.</p>
+  </section>
+
+  <section>
+    <h2>O que muda de um instalador para o outro</h2>
+    <p>O da NVIDIA leva junto as bibliotecas que fazem a transcrição da fala rodar na placa, por isso ele é maior e a análise é bem mais rápida. O outro faz a mesma coisa pelo processador: o resultado é igual, só demora mais.</p>
+    <p>A exportação dos vídeos usa a placa nos três casos.</p>
+  </section>
+
+  <section>
+    <h2>Para instalar</h2>
+    <ol>
+      <li>Abra o arquivo baixado. O Windows pode mostrar "O Windows protegeu o computador", porque o programa ainda não tem assinatura digital. Clique em Mais informações e depois em Executar assim mesmo.</li>
+      <li>Para a IA escolher os momentos sozinha, deixe marcada a opção Instalar a IA local.</li>
+      <li>Abra o Cortes pelo atalho da área de trabalho e escolha a pasta onde o OBS salva as gravações.</li>
+    </ol>
+    <p class="apagado" style="margin-top:14px">Precisa de Windows 10 ou 11 de 64 bits. Na primeira análise o Cortes baixa o modelo de transcrição, de 1,6 GB, uma vez só.</p>
+  </section>
+
+  <section>
+    <h2>Já tem o Cortes?</h2>
+    <p>Não precisa baixar de novo. No programa, abra Configurações, vá em Atualização e clique em Procurar atualização: ele baixa só o que mudou e mantém as suas gravações, a galeria e as configurações.</p>
+  </section>
+
+  <footer id="rodape">Versão de teste para convidados.</footer>
+</div>
+
+<script>
+  const BASE = "https://github.com/FrankSilva01/cortes-app/releases/latest/download/";
+  const ARQ = { nvidia: ["CortesSetup-NVIDIA.exe", "1,2 GB", "NVIDIA"], amd: ["CortesSetup-AMD-Intel.exe", "226 MB", "AMD"], intel: ["CortesSetup-AMD-Intel.exe", "226 MB", "Intel"] };
+  const botao = document.getElementById("botao"), arquivo = document.getElementById("arquivo");
+
+  function escolher(placa) {
+    const [nome, tamanho, rotulo] = ARQ[placa];
+    botao.href = BASE + nome;
+    botao.removeAttribute("aria-disabled");
+    botao.textContent = "Baixar para " + rotulo;
+    arquivo.innerHTML = "<strong>" + nome + "</strong>" + tamanho + ", para Windows 10 ou 11";
+  }
+  for (const r of document.querySelectorAll("input[name=placa]")) r.addEventListener("change", () => escolher(r.value));
+
+  // palpite pela placa que o navegador informa (lido só aqui, não é enviado a ninguém); a pessoa confirma ou troca
+  try {
+    const gl = document.createElement("canvas").getContext("webgl");
+    const ext = gl && gl.getExtension("WEBGL_debug_renderer_info");
+    const nome = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : "";
+    const placa = /nvidia|geforce|rtx|gtx/i.test(nome) ? "nvidia" : /amd|radeon/i.test(nome) ? "amd" : /intel|arc/i.test(nome) ? "intel" : null;
+    if (placa) {
+      document.querySelector("input[value=" + placa + "]").checked = true;
+      escolher(placa);
+      const p = document.getElementById("palpite");
+      p.textContent = "Este navegador indica uma placa " + ARQ[placa][2] + ", então ela já veio marcada. Confira antes de baixar.";
+      p.hidden = false;
+    }
+  } catch (e) { /* sem palpite: a pessoa escolhe */ }
+
+  // número e data da versão mais nova, direto da página de versões
+  fetch("https://api.github.com/repos/FrankSilva01/cortes-app/releases/latest").then((r) => (r.ok ? r.json() : null)).then((d) => {
+    if (!d || !d.tag_name) return;
+    const dia = new Date(d.published_at).toLocaleDateString("pt-BR");
+    document.getElementById("rodape").textContent = "Cortes " + d.tag_name.replace(/^v/, "") + ", publicado em " + dia + ". Versão de teste para convidados.";
+  }).catch(() => {});
+</script>
+</body>
+</html>
