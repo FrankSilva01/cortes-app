@@ -74,8 +74,9 @@
   .demo { position: relative; display: grid; grid-template-columns: 1fr 34%; gap: 18px; align-items: end; }
   .tela { position: relative; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px var(--fio2), 0 40px 90px -30px #000; }
   .origem { aspect-ratio: 16 / 9; }
-  .cena { position: absolute; inset: 0; background: linear-gradient(#27306b 0%, #7a4f9a 38%, #e58aa0 58%, #f6c58f 66%, #2b3a2f 66.2%, #17201c 100%); overflow: hidden; }
+  .cena { position: absolute; inset: 0; background: radial-gradient(1.5px 1.5px at 12% 12%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 27% 22%, #fff 50%, transparent 52%), radial-gradient(1.5px 1.5px at 41% 8%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 78% 16%, #fff 50%, transparent 52%), radial-gradient(1.5px 1.5px at 90% 28%, #fff 50%, transparent 52%), linear-gradient(#27306b 0%, #7a4f9a 38%, #e58aa0 58%, #f6c58f 66%, #2b3a2f 66.2%, #17201c 100%); overflow: hidden; }
   .cena::before { content: ""; position: absolute; left: 61%; top: 37%; width: 13%; aspect-ratio: 1; border-radius: 50%; background: #ffe3b0; box-shadow: 0 0 60px 20px rgba(255, 214, 160, .55); }
+  .cena::after { content: ""; position: absolute; left: 50%; top: 50%; width: 2.6%; aspect-ratio: 1; margin-left: -1.3%; border: 1.5px solid rgba(255, 255, 255, .75); border-radius: 50%; box-shadow: 0 0 0 1px rgba(0, 0, 0, .3); }
   .cena i { position: absolute; left: -4%; right: -4%; bottom: 33%; height: 30%; background: #2a2552; clip-path: polygon(0 100%, 0 62%, 9% 40%, 17% 58%, 28% 18%, 39% 52%, 47% 34%, 58% 62%, 70% 22%, 82% 56%, 91% 38%, 100% 60%, 100% 100%); }
   .cena i + i { bottom: 31%; height: 20%; background: #1b2b33; clip-path: polygon(0 100%, 0 50%, 12% 70%, 22% 38%, 36% 66%, 50% 30%, 63% 62%, 77% 42%, 90% 68%, 100% 46%, 100% 100%); }
   .cena u { position: absolute; left: 44%; bottom: 0; width: 12%; height: 34%; background: #2f3a35; clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); }
@@ -94,11 +95,12 @@
   .faz-jogo::before, .faz-cam::before { position: absolute; left: -2px; top: -1px; font: 700 10px/16px var(--corpo); padding: 0 6px; border-radius: 0 0 4px 0; color: #0b0c10; }
   .faz-jogo::before { content: "Jogo"; background: var(--jogo); } .faz-cam::before { content: "Câmera"; background: var(--camera); top: auto; bottom: -1px; border-radius: 0 4px 0 0; }
   .fone { aspect-ratio: 9 / 16; border-radius: 16px; box-shadow: 0 0 0 1px var(--fio2), 0 0 0 5px #1c1c20, 0 0 0 6px var(--fio2), 0 40px 90px -24px rgba(236, 72, 153, .45); }
-  .f-cam { position: absolute; inset: 0 0 61% 0; overflow: hidden; background: linear-gradient(160deg, #3a2c26, #1f1a22); }
+  .fone { --cam: 39%; }
+  .f-cam { position: absolute; inset: 0 0 calc(100% - var(--cam)) 0; overflow: hidden; background: linear-gradient(160deg, #3a2c26, #1f1a22); }
   .f-cam .webcam { inset: 0; width: auto; border-radius: 0; }
-  .f-jogo { position: absolute; inset: 39% 0 0 0; overflow: hidden; }
+  .f-jogo { position: absolute; inset: var(--cam) 0 0 0; overflow: hidden; }
   .f-jogo .cena { left: -41%; right: -45.600%; animation: foca-jogo 9s ease-in-out infinite; }
-  .legenda { position: absolute; left: 0; right: 0; top: 39%; transform: translateY(-50%); text-align: center; font: 800 clamp(15px, 2.3vw, 27px)/1.1 var(--titulo); letter-spacing: -.01em; text-shadow: 0 2px 0 #000, 0 0 12px rgba(0, 0, 0, .8); }
+  .legenda { position: absolute; left: 0; right: 0; top: var(--cam); transform: translateY(-50%); text-align: center; font: 800 clamp(15px, 2.3vw, 27px)/1.1 var(--titulo); letter-spacing: -.01em; text-shadow: 0 2px 0 #000, 0 0 12px rgba(0, 0, 0, .8); }
   .legenda span { position: absolute; left: 0; right: 0; opacity: 0; animation: fala 9s steps(1) infinite; }
   .legenda span:nth-child(2) { animation-delay: 3s; } .legenda span:nth-child(3) { animation-delay: 6s; }
   .legenda mark { background: var(--rosa); color: #fff; border-radius: 5px; padding: 0 .28em; }
@@ -261,13 +263,69 @@
   .envio { display: flex; flex-wrap: wrap; gap: 8px; } .envio span { padding: 8px 14px; border-radius: 999px; background: var(--clipe); color: var(--apagado); font-size: 14px; }
   .envio .on { background: var(--rosa); color: var(--rosa-escuro); font-weight: 600; box-shadow: 0 10px 26px -10px rgba(236, 72, 153, .9); }
 
+
+  /* ---------- oficina: a pessoa mexe e a prévia responde ---------- */
+  .oficina { margin-top: 60px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 20px; }
+  .of-previa { border-radius: 22px; border: 1px solid var(--fio); background: radial-gradient(420px 380px at 50% 45%, rgba(236, 72, 153, .22), transparent 72%), #08080a; display: grid; place-items: center; padding: 34px 20px; min-height: 560px; }
+  .of-previa .fone { height: 492px; aspect-ratio: 9 / 16; width: auto; transition: filter .25s; }
+  .of-previa .f-cam, .of-previa .f-jogo, .of-previa .legenda { transition: inset .25s, top .25s; }
+  .of-previa .legenda span { position: static; opacity: 1; animation: none; display: block; }
+  .of-controles { border-radius: 22px; border: 1px solid var(--fio); background: linear-gradient(180deg, #1a1a1f, #141418); padding: 30px; display: grid; gap: 28px; align-content: start; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+  .of-controles fieldset > legend { font: 700 18px/1.2 var(--titulo); letter-spacing: -.015em; padding: 0 0 12px; }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opcoes label { position: relative; }
+  .opcoes input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .opcoes span { display: block; padding: 11px 16px; border-radius: 12px; background: var(--clipe); color: var(--apagado); font-size: 15px; font-weight: 500; transition: background .15s, color .15s, box-shadow .15s; }
+  .opcoes input:hover + span { color: var(--texto); background: #2d2d34; }
+  .opcoes input:checked + span { background: var(--rosa); color: var(--rosa-escuro); font-weight: 600; box-shadow: 0 10px 26px -10px rgba(236, 72, 153, .9); }
+  .opcoes input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+  .cores span { padding: 0; width: 58px; height: 58px; border-radius: 14px; background: linear-gradient(160deg, #27306b, #e58aa0 60%, #f6c58f); box-shadow: inset 0 0 0 1px var(--fio2); }
+  .cores input:checked + span { background: linear-gradient(160deg, #27306b, #e58aa0 60%, #f6c58f); box-shadow: 0 0 0 3px var(--fundo), 0 0 0 5px var(--rosa); }
+  .cores label { display: grid; justify-items: center; gap: 7px; font-size: 13px; color: var(--apagado); }
+  .cores label small { font-size: 13px; }
+  .of-range { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; color: var(--apagado); font-size: 15px; }
+  .of-range input { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 3px; cursor: pointer; background: linear-gradient(90deg, var(--rosa) calc(var(--p, 54) * 1%), var(--clipe) 0); }
+  .of-range input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgba(236, 72, 153, .3); }
+  .of-range input::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgba(236, 72, 153, .3); }
+  .leg-neon mark { background: none; padding: 0; color: #fff; } .leg-neon { text-shadow: 0 0 14px var(--rosa), 0 0 4px var(--rosa) !important; }
+  .leg-caixa span { background: #fff; color: #111; border-radius: 6px; padding: .12em .4em; text-shadow: none; display: inline-block !important; } .leg-caixa mark { background: none; color: var(--rosa); padding: 0; } .leg-caixa { text-shadow: none !important; }
+  .leg-frase mark { background: none; color: #ffe14a; padding: 0; }
+  .f-vivido .cena, .f-vivido .webcam { filter: saturate(1.7) contrast(1.1); } .f-sepia .cena, .f-sepia .webcam { filter: sepia(.75) contrast(1.08); }
+  .f-pb .cena, .f-pb .webcam { filter: grayscale(1) contrast(1.2); } .f-neon .cena, .f-neon .webcam { filter: hue-rotate(-50deg) saturate(1.7) brightness(.92); }
+
+  /* ---------- na mão x com o Cortes ---------- */
+  .duelo { margin-top: 56px; border-radius: 22px; border: 1px solid var(--fio); overflow: hidden; }
+  .duelo > div { display: grid; grid-template-columns: 190px 1fr 1fr; }
+  .duelo > div + div { border-top: 1px solid var(--fio); }
+  .duelo span { padding: 20px 24px; color: var(--apagado); }
+  .duelo span:first-child { font: 700 17px/1.3 var(--titulo); color: var(--texto); letter-spacing: -.01em; }
+  .duelo span:last-child { color: var(--texto); background: linear-gradient(90deg, rgba(236, 72, 153, .13), rgba(236, 72, 153, .04)); border-left: 1px solid rgba(236, 72, 153, .35); }
+  .duelo .cabeca span { font: 600 14px/1 var(--corpo); color: var(--fraco); padding: 16px 24px; }
+  .duelo .cabeca span:last-child { color: var(--rosa-claro); font-weight: 700; }
+
+  /* ---------- para quem é ---------- */
+  .quem { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--fio2); }
+  .quem div { padding: 30px 30px 0 0; } .quem div + div { padding-left: 30px; border-left: 1px solid var(--fio); }
+  .quem p { color: var(--apagado); margin-top: 10px; font-size: 16px; }
+
+  /* ---------- chamada final ---------- */
+  .final { margin-top: 140px; position: relative; text-align: center; padding: 96px 28px 104px; border-top: 1px solid var(--fio); overflow: hidden; }
+  .final::before { content: ""; position: absolute; left: 50%; bottom: -340px; width: 1100px; height: 640px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(236, 72, 153, .38), rgba(236, 72, 153, .08) 60%, transparent); pointer-events: none; }
+  .final h2 { position: relative; font-size: clamp(38px, 6vw, 76px); letter-spacing: -.04em; max-width: 16ch; margin: 0 auto; }
+  .final p { position: relative; color: var(--apagado); font-size: 19px; margin: 20px auto 36px; max-width: 46ch; }
+  .final .botao { position: relative; }
+  footer { margin-top: 0; }
+
   @media (max-width: 1000px) {
+    .oficina { grid-template-columns: 1fr; } .of-previa { min-height: 0; } .quem { grid-template-columns: 1fr; } .quem div, .quem div + div { padding: 26px 0 0; border-left: 0; } .quem div + div { border-top: 1px solid var(--fio); margin-top: 26px; }
+    .duelo > div { grid-template-columns: 1fr 1fr; } .duelo span:first-child { grid-column: 1 / -1; padding-bottom: 0; } .duelo .cabeca span:first-child { display: none; }
     .chamada { grid-template-columns: 1fr; gap: 26px; } .vira { grid-template-columns: 1fr; gap: 36px; } .vitrine { margin-top: 52px; }
     .passos { grid-template-columns: 1fr 1fr; row-gap: 46px; } .passos li:nth-child(3) { border-left: 0; padding-left: 0; } .passos li:nth-child(3)::before { left: 0; }
     .passos li:nth-child(n+3) { border-top: 1px solid var(--fio2); }
     .cartao, .cartao.largo, .cartao.medio { grid-column: span 6; } .local { grid-template-columns: 1fr; gap: 40px; }
   }
   @media (max-width: 680px) {
+    .of-previa .fone { height: 400px; } .of-controles { padding: 22px; } .duelo span { padding: 16px 18px; } .final { padding: 72px 20px 80px; margin-top: 96px; }
     body { font-size: 16px; } .dentro { padding: 0 20px; } section { padding-top: 96px; } .abre { padding-top: 116px; }
     .topo nav a:not(.botao) { display: none; } .topo .dentro { gap: 14px; }
     .passos { grid-template-columns: 1fr; } .passos li, .passos li + li { border-left: 0; padding-left: 0; border-top: 1px solid var(--fio2); } .passos li + li::before { left: 0; } .passos { border-top: 0; }
@@ -283,7 +341,7 @@
   <div class="dentro">
     <a class="marca" href="#" aria-label="Cortes, início"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</a>
     <nav aria-label="Seções">
-      <a href="#como">Como funciona</a><a href="#recursos">Recursos</a><a href="#perguntas">Perguntas</a>
+      <a href="#como">Como funciona</a><a href="#experimente">Experimente</a><a href="#recursos">Recursos</a><a href="#perguntas">Perguntas</a>
       <a class="botao pequeno" href="#baixar">Baixar</a>
     </nav>
   </div>
@@ -357,6 +415,75 @@
           <h3>A gravação deitada vira o Short em pé</h3>
           <p>O Cortes acha a webcam e o melhor recorte do jogo na gravação, monta o quadro 9:16 e escreve a legenda no tempo de cada palavra. Você só arrasta se quiser mudar.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experimente">
+    <div class="dentro">
+      <h2>Mexa você mesmo</h2>
+      <p class="sub">Dentro do programa é assim: cada escolha aparece na hora na prévia. Experimente aqui.</p>
+      <div class="oficina">
+        <div class="of-previa">
+          <div class="tela fone" id="ofFone">
+            <div class="f-jogo"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div class="f-cam"><div class="webcam"></div></div>
+            <div class="legenda leg-marca" id="ofLeg"><span>OLHA <mark>ISSO</mark></span></div>
+          </div>
+        </div>
+        <form class="of-controles" id="ofForm">
+          <fieldset><legend>Estilo da legenda</legend>
+            <div class="opcoes">
+              <label><input type="radio" name="leg" value="leg-marca" checked><span>Marca-texto</span></label>
+              <label><input type="radio" name="leg" value="leg-neon"><span>Neon</span></label>
+              <label><input type="radio" name="leg" value="leg-caixa"><span>Caixa</span></label>
+              <label><input type="radio" name="leg" value="leg-frase"><span>Destaque amarelo</span></label>
+            </div>
+          </fieldset>
+          <fieldset><legend>Filtro de cor</legend>
+            <div class="opcoes cores">
+              <label><input type="radio" name="cor" value="" checked><span></span><small>Original</small></label>
+              <label><input type="radio" name="cor" value="f-vivido"><span style="filter:saturate(1.7) contrast(1.1)"></span><small>Vívido</small></label>
+              <label><input type="radio" name="cor" value="f-sepia"><span style="filter:sepia(.75) contrast(1.08)"></span><small>Sépia</small></label>
+              <label><input type="radio" name="cor" value="f-pb"><span style="filter:grayscale(1) contrast(1.2)"></span><small>Preto e branco</small></label>
+              <label><input type="radio" name="cor" value="f-neon"><span style="filter:hue-rotate(-50deg) saturate(1.7) brightness(.92)"></span><small>Neon</small></label>
+            </div>
+          </fieldset>
+          <fieldset><legend>Tamanho da câmera</legend>
+            <div class="of-range"><input type="range" name="cam" min="24" max="52" value="39" aria-label="Tamanho da câmera"><output id="ofCam">39%</output></div>
+          </fieldset>
+          <fieldset><legend>Montagem da tela</legend>
+            <div class="opcoes">
+              <label><input type="radio" name="lay" value="cam" checked><span>Câmera + jogo</span></label>
+              <label><input type="radio" name="lay" value="cheio"><span>Jogo cheio</span></label>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="dentro">
+      <h2>O trabalho que ele tira de você</h2>
+      <p class="sub">O que costuma tomar a tarde inteira, etapa por etapa.</p>
+      <div class="duelo">
+        <div class="cabeca"><span></span><span>Editando na mão</span><span>Com o Cortes</span></div>
+        <div><span>Achar os momentos</span><span>Assistir de novo horas de gravação</span><span>35 segundos para 38 minutos de gravação, numa RTX 5060 Ti</span></div>
+        <div><span>Enquadrar</span><span>Recortar câmera e jogo, clipe por clipe</span><span>Acha a webcam e monta o 9:16 sozinho</span></div>
+        <div><span>Legendar</span><span>Digitar e acertar o tempo à mão</span><span>Transcreve e sincroniza palavra por palavra</span></div>
+        <div><span>Exportar</span><span>Um vídeo de cada vez</span><span>Vários de uma vez: seis Shorts em 1440p em 42 segundos</span></div>
+        <div><span>Publicar</span><span>Abrir o Studio e subir um por um</span><span>Envia do próprio programa, privado, público ou agendado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="dentro">
+      <h2>Para quem grava horas e posta minutos</h2>
+      <div class="quem">
+        <div><h3>Quem faz live</h3><p>A live acabou e os melhores momentos já estão separados, com nota, esperando o seu sim ou não.</p></div>
+        <div><h3>Canal de gameplay</h3><p>Um Short por dia sem editar todo dia: uma gravação longa rende a semana inteira.</p></div>
+        <div><h3>Quem edita para outros</h3><p>Predefinições de enquadramento e legenda por canal, e exportação em lote para entregar rápido.</p></div>
       </div>
     </div>
   </section>
@@ -468,6 +595,11 @@
       </div>
     </div>
   </section>
+  <div class="final">
+    <h2>Sua próxima gravação já pode virar Short</h2>
+    <p>Instale, aponte para a pasta do OBS e veja os momentos aparecerem.</p>
+    <a class="botao" href="#baixar"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para Windows</a>
+  </div>
 </main>
 
 <footer>
@@ -489,6 +621,20 @@
   const jcx = document.querySelector(".janela-cx");
   const escala = () => jcx.style.setProperty("--s", (jcx.clientWidth / 1160).toFixed(4));
   new ResizeObserver(escala).observe(jcx); escala();
+
+  // oficina: cada escolha muda a prévia na hora
+  const ofForm = document.getElementById("ofForm"), ofFone = document.getElementById("ofFone"), ofLeg = document.getElementById("ofLeg");
+  function oficina() {
+    const d = new FormData(ofForm), cheio = d.get("lay") === "cheio", cam = +d.get("cam");
+    ofLeg.className = "legenda " + d.get("leg");
+    ofFone.className = "tela fone " + (d.get("cor") || "");
+    ofFone.style.setProperty("--cam", cheio ? "0%" : cam + "%");
+    ofLeg.style.top = cheio ? "68%" : "";
+    ofForm.elements.cam.disabled = cheio;
+    ofForm.elements.cam.style.setProperty("--p", ((cam - 24) / 28) * 100);
+    document.getElementById("ofCam").textContent = cheio ? "sem câmera" : cam + "%";
+  }
+  ofForm.addEventListener("input", oficina); oficina();
 
   // a agulha da régua do topo acompanha a rolagem da página
   const raiz = document.documentElement;
