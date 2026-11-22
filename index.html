@@ -204,8 +204,64 @@
   footer { margin-top: 140px; border-top: 1px solid var(--fio); padding: 34px 0 60px; color: var(--fraco); font-size: 14.500px; }
   footer .dentro { display: flex; flex-wrap: wrap; gap: 14px 30px; align-items: center; } footer .marca { font-size: 17px; color: var(--apagado); }
 
+
+  /* ---------- abertura: chamada em duas colunas e a janela do programa em tamanho grande ---------- */
+  .abre .dentro { display: block; }
+  .chamada { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 56px; align-items: end; }
+  .chamada p { margin-top: 0; }
+  .abre::before { top: 220px; left: 50%; width: 1300px; height: 900px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(236, 72, 153, .3), rgba(236, 72, 153, .07) 55%, transparent); }
+  .vitrine { margin-top: 72px; position: relative; }
+  .janela-cx { position: relative; height: calc(700px * var(--s, 1)); }
+  .janela { position: absolute; left: 0; top: 0; width: 1160px; height: 700px; transform: scale(var(--s, 1)); transform-origin: 0 0; border-radius: 18px; background: #0a0a0c; border: 1px solid var(--fio2);
+    box-shadow: 0 70px 160px -50px rgba(236, 72, 153, .6), 0 40px 90px -40px #000, inset 0 1px 0 rgba(255, 255, 255, .08); overflow: hidden; display: grid; grid-template-rows: 48px 1fr 178px; gap: 8px; padding: 0 8px 8px; font: 12px/1.4 var(--corpo); }
+  .j-topo { display: flex; align-items: center; gap: 16px; padding: 0 8px; color: var(--apagado); font-size: 12.5px; }
+  .j-topo .lg { width: 26px; height: 26px; border-radius: 8px; background: var(--rosa); box-shadow: 0 6px 18px -4px rgba(236, 72, 153, .8); }
+  .j-topo b { font: 700 14.5px/1 var(--titulo); color: var(--texto); margin: 0 auto; letter-spacing: -.015em; }
+  .j-topo .ok::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--jogo); margin-right: 6px; }
+  .j-topo .exp { background: var(--rosa); color: var(--rosa-escuro); padding: 9px 16px; border-radius: 10px; font: 700 13px/1 var(--titulo); box-shadow: 0 8px 22px -8px rgba(236, 72, 153, .9); }
+  .j-meio { display: grid; grid-template-columns: 252px 1fr 286px; gap: 8px; min-height: 0; }
+  .j-p { background: linear-gradient(180deg, #17171b, #121215); border: 1px solid var(--fio); border-radius: 14px; overflow: hidden; padding: 10px; position: relative; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+  .j-abas { display: flex; gap: 4px; margin-bottom: 4px; } .j-abas span { flex: 1; text-align: center; padding: 9px 0; border-radius: 9px; color: var(--apagado); font-weight: 600; } .j-abas .on { background: #232328; color: var(--texto); }
+  .j-mom { display: flex; gap: 10px; padding: 7px; border-radius: 11px; margin-top: 5px; border: 1px solid transparent; align-items: center; }
+  .j-mom.on { background: linear-gradient(180deg, rgba(236, 72, 153, .17), rgba(236, 72, 153, .07)); border-color: rgba(236, 72, 153, .6); box-shadow: 0 12px 30px -16px rgba(236, 72, 153, .8); }
+  .mini-cena { width: 80px; height: 45px; border-radius: 7px; position: relative; overflow: hidden; flex: none; }
+  .j-mom strong { display: block; font: 700 12.5px/1.3 var(--titulo); color: var(--texto); } .j-mom small { color: var(--fraco); font-size: 11px; }
+  .j-mom em { margin-left: auto; font: 800 13.5px/1 var(--titulo); color: var(--jogo); font-style: normal; }
+  .j-centro { display: grid; grid-template-rows: 1fr 58px; padding: 0; }
+  .j-palco { margin: 10px 10px 0; border-radius: 12px; background: radial-gradient(360px 300px at 50% 46%, rgba(236, 72, 153, .22), transparent 72%), #08080a; display: grid; place-items: center; min-height: 0; }
+  .j-palco .fone { height: 90%; width: auto; }
+  .j-transp { display: flex; align-items: center; justify-content: center; gap: 18px; }
+  .j-transp i { width: 40px; height: 40px; border-radius: 50%; background: var(--rosa); box-shadow: 0 10px 26px -8px rgba(236, 72, 153, .9); position: relative; }
+  .j-transp i::after { content: ""; position: absolute; left: 16px; top: 13px; border: 7px solid transparent; border-left: 11px solid var(--rosa-escuro); border-right: 0; }
+  .j-transp u { width: 14px; height: 12px; background: var(--fraco); clip-path: polygon(0 0, 22% 0, 22% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 30% 50%, 100% 0); }
+  .j-transp u:last-child { transform: scaleX(-1); }
+  .icones { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+  .icones span { height: 50px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: var(--fraco); font-size: 10.5px; font-weight: 600; }
+  .icones svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .icones .on { background: #232328; color: var(--texto); } .icones .on svg { color: var(--rosa); filter: drop-shadow(0 0 7px rgba(236, 72, 153, .8)); }
+  .j-dir h4 { font: 800 18px/1.2 var(--titulo); letter-spacing: -.025em; margin: 14px 2px 12px; }
+  .j-dir .estilos { gap: 8px; } .j-dir .estilos div { height: 52px; font-size: 14px; }
+  .j-des { margin: 14px 2px 0; } .j-des label { display: flex; justify-content: space-between; color: var(--apagado); font-size: 12px; }
+  .j-des i { display: block; height: 5px; border-radius: 3px; margin-top: 8px; background: linear-gradient(90deg, var(--rosa) var(--v), #2f2f36 0); position: relative; }
+  .j-des i::after { content: ""; position: absolute; left: var(--v); top: -5px; width: 15px; height: 15px; margin-left: -7px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px rgba(236, 72, 153, .28); }
+  .j-tl { padding: 10px 14px 12px; display: grid; grid-template-rows: 22px repeat(3, 1fr); gap: 7px; }
+  .j-tl .tc { font: 600 14px/1 Consolas, monospace; color: var(--agulha); letter-spacing: .03em; text-shadow: 0 0 14px rgba(110, 168, 255, .55); }
+  .j-linha { display: grid; grid-template-columns: 74px 1fr; align-items: center; gap: 8px; color: var(--apagado); font-size: 11.5px; min-height: 0; }
+  .j-linha > div { height: 100%; margin: 0; }
+  .tira { border-radius: 5px; background: repeating-linear-gradient(90deg, #27306b 0 2.2%, #7a4f9a 2.2% 4.1%, #e58aa0 4.1% 5.2%, #2b3a2f 5.2% 6.4%, #0a0a0c 6.4% 6.6%); opacity: .9; }
+  .j-linha .onda { gap: 1.5px; } .j-linha .faixa { margin: 0; }
+  .j-tl .agulha { position: absolute; top: 34px; bottom: 10px; width: 2px; background: var(--agulha); left: 96px; animation: corre2 12s linear infinite; box-shadow: 0 0 10px var(--agulha); }
+  @keyframes corre2 { from { left: 96px; } to { left: calc(100% - 16px); } }
+
+  /* a transformação deitado -> em pé, dentro de "como funciona" */
+  .vira { margin-top: 88px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 56px; align-items: center; }
+  .vira .demo { grid-template-columns: 1fr 30%; }
+  .vira h3 { font-size: 30px; font-weight: 800; letter-spacing: -.025em; line-height: 1.1; } .vira p { color: var(--apagado); margin-top: 14px; max-width: 44ch; }
+  .envio { display: flex; flex-wrap: wrap; gap: 8px; } .envio span { padding: 8px 14px; border-radius: 999px; background: var(--clipe); color: var(--apagado); font-size: 14px; }
+  .envio .on { background: var(--rosa); color: var(--rosa-escuro); font-weight: 600; box-shadow: 0 10px 26px -10px rgba(236, 72, 153, .9); }
+
   @media (max-width: 1000px) {
-    .abre .dentro { grid-template-columns: 1fr; gap: 54px; } .abre::before { transform: translateX(-50%); }
+    .chamada { grid-template-columns: 1fr; gap: 26px; } .vira { grid-template-columns: 1fr; gap: 36px; } .vitrine { margin-top: 52px; }
     .passos { grid-template-columns: 1fr 1fr; row-gap: 46px; } .passos li:nth-child(3) { border-left: 0; padding-left: 0; } .passos li:nth-child(3)::before { left: 0; }
     .passos li:nth-child(n+3) { border-top: 1px solid var(--fio2); }
     .cartao, .cartao.largo, .cartao.medio { grid-column: span 6; } .local { grid-template-columns: 1fr; gap: 40px; }
@@ -236,33 +292,44 @@
 <main>
   <div class="abre">
     <div class="dentro">
-      <div>
+      <div class="chamada">
         <h1>Grave no OBS.<span>Publique Shorts.</span></h1>
-        <p>O Cortes encontra os melhores momentos da sua gameplay, enquadra a câmera e o jogo, põe legenda e exporta. Roda inteiro no seu PC.</p>
-        <div class="acoes">
-          <a class="botao" href="#baixar"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para Windows</a>
-          <a class="botao calmo" href="#como">Ver como funciona</a>
+        <div>
+          <p>O Cortes encontra os melhores momentos da sua gameplay, enquadra a câmera e o jogo, põe legenda e exporta. Roda inteiro no seu PC.</p>
+          <div class="acoes">
+            <a class="botao" href="#baixar"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para Windows</a>
+            <a class="botao calmo" href="#como">Ver como funciona</a>
+          </div>
+          <small>Windows 10 e 11. Placa NVIDIA, AMD ou Intel.</small>
         </div>
-        <small>Windows 10 e 11. Placa NVIDIA, AMD ou Intel.</small>
       </div>
 
-      <div class="demo" aria-hidden="true">
-        <div class="tela origem">
-          <div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div>
-          <div class="webcam"></div>
-          <div class="faz-jogo"></div><div class="faz-cam"></div>
-        </div>
-        <div class="tela fone">
-          <div class="f-jogo"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div>
-          <div class="f-cam"><div class="webcam"></div></div>
-          <div class="legenda"><span>OLHA <mark>ISSO</mark></span><span>NÃO <mark>ACREDITO</mark></span><span>QUE <mark>SUSTO</mark></span></div>
-        </div>
-        <div class="mini">
-          <span class="tc">00:12:07</span>
-          <div class="onda" data-onda="72"></div>
-          <div class="faixa"><b style="left:6%;width:11%"></b><b class="sel" style="left:31%;width:14%"></b><b style="left:58%;width:9%"></b><b style="left:79%;width:12%"></b></div>
-          <i class="agulha"></i>
-        </div>
+      <div class="vitrine" aria-hidden="true">
+        <div class="janela-cx"><div class="janela">
+          <div class="j-topo"><i class="lg"></i><span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Ajuda</span><b>Gameplay de sábado</b><span class="ok">Salvo</span><span class="exp">Exportar</span></div>
+          <div class="j-meio">
+            <div class="j-p j-esq"><div class="j-abas"><span class="on">Momentos</span><span>Galeria</span></div><div class="j-mom on"><div class="mini-cena"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div><strong>Não acredito nisso</strong><small>0:42</small></div><em>87</em></div><div class="j-mom "><div class="mini-cena"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div><strong>Que susto, mano</strong><small>3:15</small></div><em>81</em></div><div class="j-mom "><div class="mini-cena"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div><strong>Olha o que ele fez</strong><small>7:02</small></div><em>74</em></div><div class="j-mom "><div class="mini-cena"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div><strong>Morri de novo</strong><small>9:48</small></div><em>69</em></div></div>
+            <div class="j-p j-centro">
+              <div class="j-palco"><div class="tela fone">
+                <div class="f-jogo"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div class="f-cam"><div class="webcam"></div></div>
+                <div class="legenda"><span>OLHA <mark>ISSO</mark></span><span>NÃO <mark>ACREDITO</mark></span><span>QUE <mark>SUSTO</mark></span></div>
+              </div></div>
+              <div class="j-transp"><u></u><i></i><u></u></div>
+            </div>
+            <div class="j-p j-dir"><div class="icones"><span class=""><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg>Momento</span><span class=""><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 002 2h14M2 6h14a2 2 0 012 2v14"/></svg>Enquadrar</span><span class="on"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M7 15h4M13 15h4M7 11h2M11 11h6"/></svg>Legenda</span><span class=""><svg viewBox="0 0 24 24"><path d="M3 21l11-11M13 7l4 4"/><path d="M18 2v4M16 4h4M20 13v3M18.5 14.5h3M8 3v2M7 4h2"/></svg>Efeitos</span><span class=""><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Áudio</span></div><h4>Legenda</h4>
+              <div class="estilos"><div class="marca-leg">OLHA&nbsp;<mark>ISSO</mark></div><div class="neon">OLHA ISSO</div><div class="caixa"><span>OLHA <b>ISSO</b></span></div><div class="frase">OLHA&nbsp;<b>ISSO</b></div></div>
+              <div class="j-des"><label><span>Tamanho</span><span>76 px</span></label><i style="--v:58%"></i></div>
+              <div class="j-des"><label><span>Posição</span><span>meio</span></label><i style="--v:39%"></i></div>
+            </div>
+          </div>
+          <div class="j-p j-tl">
+            <span class="tc">00:12:07,4</span>
+            <div class="j-linha"><span>Vídeo</span><div class="tira"></div></div>
+            <div class="j-linha"><span>Áudio</span><div class="onda" data-onda="150" data-s="11"></div></div>
+            <div class="j-linha"><span>Momentos</span><div class="faixa"><b style="left:5%;width:8%"></b><b class="sel" style="left:27%;width:10%"></b><b style="left:49%;width:7%"></b><b style="left:68%;width:9%"></b><b style="left:86%;width:6%"></b></div></div>
+            <i class="agulha"></i>
+          </div>
+        </div></div>
       </div>
     </div>
   </div>
@@ -277,6 +344,19 @@
         <li><h3>Você dá o acabamento</h3><p>Enquadramento, legenda, efeitos e áudio, numa linha do tempo com os atalhos que você já conhece.</p></li>
         <li><h3>Exporte e envie</h3><p>Shorts em pé ou vídeo deitado, até 4K. Dá para mandar direto ao YouTube como privado, público ou agendado.</p></li>
       </ol>
+      <div class="vira">
+        <div class="demo" aria-hidden="true">
+          <div class="tela origem"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div><div class="webcam"></div><div class="faz-jogo"></div><div class="faz-cam"></div></div>
+          <div class="tela fone">
+            <div class="f-jogo"><div class="cena"><i></i><i></i><u></u><em></em><s></s><b></b></div></div><div class="f-cam"><div class="webcam"></div></div>
+            <div class="legenda"><span>OLHA <mark>ISSO</mark></span><span>NÃO <mark>ACREDITO</mark></span><span>QUE <mark>SUSTO</mark></span></div>
+          </div>
+        </div>
+        <div>
+          <h3>A gravação deitada vira o Short em pé</h3>
+          <p>O Cortes acha a webcam e o melhor recorte do jogo na gravação, monta o quadro 9:16 e escreve a legenda no tempo de cada palavra. Você só arrasta se quiser mudar.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -313,10 +393,15 @@
           <p>Volume da voz e do jogo independentes, bip nos palavrões, corte de silêncio e sons numa trilha própria.</p>
           <div class="figura duas-ondas"><div class="onda voz" data-onda="46" data-s="7"></div><small>Sua voz</small><div class="onda game" data-onda="46" data-s="3"></div><small>Som do jogo</small></div>
         </article>
-        <article class="cartao medio">
+        <article class="cartao largo">
           <h3>Aprende com o seu canal</h3>
           <p>Conecte o YouTube e o Cortes lê o desempenho dos seus Shorts. As notas passam a puxar para a duração que rende mais com o seu público.</p>
           <div class="figura barras"><i style="--h:38%"></i><i class="melhor" style="--h:100%"></i><i style="--h:72%"></i><i style="--h:44%"></i><i style="--h:26%"></i><i style="--h:18%"></i></div>
+        </article>
+        <article class="cartao medio">
+          <h3>Do Cortes direto para o YouTube</h3>
+          <p>Envie o vídeo pronto como privado, não listado, público ou agendado, sem abrir o Studio.</p>
+          <div class="figura envio"><span>Privado</span><span>Não listado</span><span class="on">Público</span><span>Agendar</span></div>
         </article>
         <article class="cartao largo">
           <h3>Atalhos de editor de verdade</h3>
@@ -398,6 +483,11 @@
     for (let i = 0; i < +el.dataset.onda; i++) { s = (s * 9301 + 49297) % 233280; const v = s / 233280; h += '<i style="height:' + Math.round(14 + 86 * Math.pow(v, 1.6) * (0.55 + 0.45 * Math.sin(i / 3.1) ** 2)) + '%"></i>'; }
     el.innerHTML = h;
   }
+
+  // a janela do programa é desenhada em 1160 px e encolhe junto com a página
+  const jcx = document.querySelector(".janela-cx");
+  const escala = () => jcx.style.setProperty("--s", (jcx.clientWidth / 1160).toFixed(4));
+  new ResizeObserver(escala).observe(jcx); escala();
 
   // a agulha da régua do topo acompanha a rolagem da página
   const raiz = document.documentElement;
