@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacidade · Cortes</title>
+<meta name="description" content="O que fica no seu computador, o que usa a internet e como funciona a conexão com o YouTube.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ec4899'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fundo: #0d0d0f; --painel: #18181c; --fio: rgba(255, 255, 255, .08); --fio2: rgba(255, 255, 255, .14); --texto: #f2f2f5; --apagado: #a3a3ad; --fraco: #70707b;
+    --rosa: #ec4899; --rosa-claro: #f9a8d4; --rosa-escuro: #1a0611; --titulo: "Bricolage Grotesque", "Segoe UI", sans-serif; --corpo: "Onest", "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; }
+  html { color-scheme: dark; }
+  body { background: var(--fundo); color: var(--texto); font: 400 17px/1.65 var(--corpo); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--rosa); color: var(--rosa-escuro); }
+  .dentro { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  .topo { position: sticky; top: 0; z-index: 5; backdrop-filter: blur(16px) saturate(1.3); background: rgba(13, 13, 15, .78); border-bottom: 1px solid var(--fio); }
+  .topo .dentro { height: 64px; display: flex; align-items: center; gap: 26px; }
+  .marca { font: 800 20px/1 var(--titulo); letter-spacing: -.03em; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .marca i { width: 28px; height: 28px; border-radius: 8px; background: var(--rosa); display: grid; place-items: center; box-shadow: 0 6px 20px -4px rgba(236, 72, 153, .7); }
+  .marca svg { width: 15px; height: 15px; stroke: var(--rosa-escuro); fill: none; stroke-width: 2.6; stroke-linecap: round; }
+  .topo nav { display: flex; gap: 22px; margin-left: auto; font-size: 15px; color: var(--apagado); }
+  .topo nav a { text-decoration: none; }
+  .topo nav a:hover, .topo nav a[aria-current] { color: var(--texto); }
+  main { max-width: 760px; margin: 0 auto; padding: 72px 28px 96px; }
+  h1 { font: 800 clamp(34px, 5vw, 52px)/1.04 var(--titulo); letter-spacing: -.03em; text-wrap: balance; }
+  .data { color: var(--fraco); font-size: 15px; margin: 14px 0 34px; }
+  h2 { font: 700 24px/1.2 var(--titulo); letter-spacing: -.02em; margin: 46px 0 12px; padding-top: 22px; border-top: 1px solid var(--fio); }
+  p, li { color: #d0d0d7; max-width: 68ch; }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 16px; padding-left: 22px; display: grid; gap: 8px; }
+  li::marker { color: var(--rosa); }
+  main a { color: var(--rosa-claro); text-underline-offset: 3px; overflow-wrap: anywhere; }
+  main a:hover { color: #fff; }
+  footer { border-top: 1px solid var(--fio); color: var(--fraco); font-size: 15px; }
+  footer .dentro { min-height: 84px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; padding-top: 18px; padding-bottom: 18px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--texto); }
+  @media (max-width: 640px) { .topo nav a:not(.fica) { display: none; } main { padding-top: 48px; } }
+</style>
+</head>
+<body>
+<header class="topo"><div class="dentro">
+  <a class="marca" href="./"><i><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></i>Cortes</a>
+  <nav><a href="termos.html">Termos de uso</a><a href="privacidade.html" aria-current="page">Privacidade</a><a href="licencas.html">Licenças e créditos</a><a class="fica" href="./#baixar">Baixar</a></nav>
+</div></header>
+<main>
+<h1>Política de privacidade do Cortes</h1>
+<p class="data">Versão de 22 de novembro de 2026.</p>
+<p>O Cortes é um programa para Windows que roda inteiro no seu computador. Ele não tem conta, não tem cadastro e não tem servidor próprio: quem fez o Cortes não recebe os seus vídeos, as suas transcrições, as suas estatísticas nem nenhum dado de uso. Este texto explica o que fica no seu PC, o que sai dele e quando.</p>
+<h2>O que fica só no seu computador</h2>
+<ul>
+  <li>As gravações que você abre e os vídeos que você exporta. Eles nunca são enviados a lugar nenhum pelo Cortes, a não ser quando você mesmo clica em Enviar ao YouTube.</li>
+  <li>A transcrição da fala, a análise dos momentos, as legendas, os ajustes de edição e a galeria de imagens e sons.</li>
+  <li>A "assinatura" da sua voz, se você usar a opção de reconhecer a sua voz. Ela é calculada e guardada no seu PC e serve só para separar a sua fala das outras.</li>
+  <li>As suas configurações e a chave de acesso ao YouTube, se você conectar o canal.</li>
+</ul>
+<p>Tudo isso fica numa pasta de dados do Cortes no seu usuário do Windows. Em Configurações, Pastas e canal, o programa mostra onde ela está. Para apagar esses dados, apague a pasta ou desinstale o Cortes e responda Sim quando ele perguntar se deve apagar os dados.</p>
+<h2>Quando o Cortes usa a internet</h2>
+<ul>
+  <li>Atualização: ao abrir e a cada 3 horas, o Cortes lê um arquivo público no GitHub para saber se existe versão nova. Dá para desligar em Configurações, Atualização. Quando você aceita atualizar, ele baixa o pacote do GitHub.</li>
+  <li>Modelo de transcrição: na primeira análise, o Cortes baixa o modelo que transforma fala em texto, hospedado no Hugging Face. Depois disso a transcrição roda sem internet.</li>
+  <li>IA local (opcional): os modelos de IA rodam no seu PC pelo programa Ollama. Baixar um modelo busca o arquivo nos servidores do Ollama.</li>
+  <li>YouTube (opcional): só se você conectar o seu canal, como explicado abaixo.</li>
+</ul>
+<p>Nesses acessos, o serviço do outro lado (GitHub, Hugging Face, Ollama ou Google) enxerga o endereço de internet do seu computador, como acontece em qualquer download. O Cortes não manda junto nenhuma informação sobre você nem sobre os seus vídeos.</p>
+<p>O Cortes não tem telemetria, anúncios nem rastreadores.</p>
+<h2>Conexão com o YouTube</h2>
+<p>Conectar o canal é opcional. A conexão é feita na página de login do próprio Google; o Cortes nunca vê a sua senha. O Cortes usa os Serviços de API do YouTube e pede estas permissões:</p>
+<ul>
+  <li>Ver os vídeos do seu canal e as estatísticas deles (permissões de leitura). O Cortes lê o desempenho dos seus Shorts dos últimos 18 meses, como visualizações, retenção, curtidas, comentários, compartilhamentos e inscritos ganhos. Esses números ficam guardados no seu PC e servem para dar nota aos momentos pelo que funciona no seu canal e para orientar a IA local.</li>
+  <li>Enviar vídeos (permissão pedida à parte, só quando você decide enviar pelo Cortes). Ao clicar em Enviar, o Cortes manda ao YouTube o arquivo do vídeo, o título, a descrição, as hashtags, a visibilidade e, se você agendou, a data de publicação.</li>
+</ul>
+<p>O Cortes não apaga, não edita e não comenta nada no seu canal.</p>
+<p>A chave de acesso que o Google entrega fica guardada só no seu computador. Ela não é enviada a quem fez o Cortes nem a terceiros. Os dados lidos do YouTube não são vendidos, não são compartilhados e não são usados para anúncios.</p>
+<p>O uso que o Cortes faz das informações recebidas das APIs do Google segue a Política de Dados do Usuário dos Serviços de API do Google, incluindo os requisitos de Uso Limitado.</p>
+<p>Para desfazer a conexão: em Configurações, YouTube, clique em Desconectar. O Cortes pede ao Google que cancele a chave e apaga a cópia local. Você também pode remover o acesso a qualquer momento em <a href="https://myaccount.google.com/permissions" rel="noopener">https://myaccount.google.com/permissions</a></p>
+<p>Ao usar a conexão com o YouTube, valem também a Política de Privacidade do Google, em <a href="https://policies.google.com/privacy" rel="noopener">https://policies.google.com/privacy</a></p>
+<h2>Relatar um problema</h2>
+<p>O menu Ajuda, Relatar um problema, monta um arquivo na sua área de trabalho com a sua descrição, a versão do programa, informações do PC (Windows, placa de vídeo), as tarefas que falharam e o final do registro do programa. O arquivo não leva vídeos, senhas nem a chave do YouTube. Ele só sai do seu computador se você mesmo enviar para alguém.</p>
+<h2>O site do Cortes</h2>
+<p>A página de apresentação e de download fica hospedada no GitHub Pages e carrega as fontes de letra do Google Fonts. Ela não usa cookies, não tem formulário e não tem ferramenta de estatística de visitas. GitHub e Google, como qualquer hospedagem, registram o endereço de internet de quem acessa.</p>
+<h2>Crianças</h2>
+<p>O Cortes não é voltado a crianças e não coleta dados de ninguém.</p>
+<h2>Seus direitos</h2>
+<p>Como quem fez o Cortes não recebe nem guarda dados pessoais seus, não há cadastro para consultar, corrigir ou apagar do nosso lado: os seus dados estão no seu computador e sob o seu controle. Se tiver qualquer dúvida sobre privacidade, fale com a gente pelo endereço de contato abaixo.</p>
+<h2>Mudanças neste texto</h2>
+<p>Se o funcionamento do Cortes mudar de um jeito que afete a sua privacidade, este texto é atualizado e a mudança aparece nas notas da versão, dentro do programa.</p>
+<h2>Contato</h2>
+<p>O Cortes é um projeto do canal CLT TAMBÉM JOGA. Dúvidas e pedidos: <a href="https://github.com/FrankSilva01/cortes-app/issues" rel="noopener">https://github.com/FrankSilva01/cortes-app/issues</a></p>
+</main>
+<footer><div class="dentro"><span>Cortes, um projeto do canal CLT TAMBÉM JOGA.</span><a href="./">Página inicial</a><a href="termos.html">Termos de uso</a><a href="licencas.html">Licenças e créditos</a></div></footer>
+</body>
+</html>
