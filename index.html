@@ -191,7 +191,7 @@
   .clipe input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
   .pegar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; padding: 22px 12px 10px; }
   .pegar .botao[aria-disabled="true"] { background: var(--clipe); color: var(--apagado); box-shadow: none; pointer-events: none; }
-  .arquivo { font-size: 15px; color: var(--apagado); line-height: 1.45; } .arquivo strong { color: var(--texto); font-weight: 600; display: block; }
+  .arquivo { font-size: 15px; color: var(--apagado); line-height: 1.45; flex: 1 1 320px; max-width: 64ch; } .arquivo strong { color: var(--texto); font-weight: 600; display: block; }
   .palpite { padding: 0 12px 8px; font-size: 14.500px; color: var(--fraco); }
   .direto { margin-top: 18px; font-size: 14.500px; color: var(--fraco); } .direto a { color: var(--apagado); text-decoration: underline; text-underline-offset: 3px; } .direto a:hover { color: var(--texto); }
 
@@ -561,26 +561,24 @@
 
   <section id="baixar">
     <div class="dentro">
-      <h2>Baixe o instalador da sua placa</h2>
-      <p class="sub">São dois instaladores. O da NVIDIA leva as bibliotecas que fazem a transcrição rodar na placa; o outro transcreve pelo processador.</p>
+      <h2>Um instalador para qualquer placa</h2>
+      <p class="sub">O mesmo arquivo serve para NVIDIA, AMD, Intel e para PC sem placa de vídeo. Marque a sua para ver o que o Cortes faz nela.</p>
       <form class="baixar-cx">
         <fieldset>
           <legend>Qual é a placa de vídeo do seu PC?</legend>
           <div class="clipes">
             <label class="clipe"><input type="radio" name="placa" value="nvidia"><span><b>NVIDIA</b><small>GeForce GTX ou RTX. Análise mais rápida.</small></span></label>
-            <label class="clipe"><input type="radio" name="placa" value="amd"><span><b>AMD</b><small>Radeon. Exporta pela placa.</small></span></label>
+            <label class="clipe"><input type="radio" name="placa" value="amd"><span><b>AMD</b><small>Radeon. Analisa e exporta pela placa.</small></span></label>
             <label class="clipe"><input type="radio" name="placa" value="intel"><span><b>Intel</b><small>Arc, vídeo integrado ou PC sem placa.</small></span></label>
           </div>
           <div class="pegar">
-            <a class="botao" id="botao" aria-disabled="true" href="#baixar">Escolha a placa acima</a>
-            <div class="arquivo" id="arquivo" aria-live="polite"></div>
+            <a class="botao" id="botao" href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup.exe"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para Windows</a>
+            <div class="arquivo" id="arquivo" aria-live="polite"><strong>CortesSetup.exe</strong>1,2 GB, para Windows 10 ou 11</div>
           </div>
           <p class="palpite" id="palpite" hidden></p>
         </fieldset>
       </form>
-      <p class="direto">Não sabe qual é a sua? Aperte Ctrl + Shift + Esc, abra Desempenho e clique em GPU. Links diretos:
-        <a href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup-NVIDIA.exe">NVIDIA (1,2 GB)</a> e
-        <a href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup-AMD-Intel.exe">AMD ou Intel (226 MB)</a>.</p>
+      <p class="direto">Não sabe qual é a sua placa? Não faz diferença para baixar: o instalador é o mesmo, e o Cortes descobre a placa sozinho. Link direto: <a href="https://github.com/FrankSilva01/cortes-app/releases/latest/download/CortesSetup.exe">CortesSetup.exe (1,2 GB)</a>.</p>
     </div>
   </section>
 
@@ -589,9 +587,9 @@
       <h2>Antes de instalar</h2>
       <div class="perguntas">
         <details><summary>O Windows disse que o programa é desconhecido. E agora?</summary><p>O instalador ainda não tem assinatura digital, então o Windows mostra "O Windows protegeu o computador". Clique em Mais informações e depois em Executar assim mesmo.</p></details>
-        <details><summary>Funciona sem placa NVIDIA?</summary><p>Funciona. Em placas AMD e Intel a exportação usa a placa normalmente; só a transcrição da fala roda no processador, e por isso a análise demora mais. O resultado é o mesmo.</p></details>
-        <details><summary>Quanto espaço ele ocupa?</summary><p>O instalador da NVIDIA tem 1,2 GB e o de AMD ou Intel, 226 MB. Na primeira análise o Cortes baixa o modelo de transcrição, de 1,6 GB, uma vez só. A IA local é opcional e ocupa de 5 a 9 GB, conforme o modelo.</p></details>
-        <details><summary>Como recebo as atualizações?</summary><p>Pelo próprio programa: Configurações, Atualização, Procurar atualização. Ele baixa só o que mudou, cerca de 27 MB, e mantém as suas gravações analisadas, a galeria e as configurações.</p></details>
+        <details><summary>Funciona sem placa NVIDIA?</summary><p>Funciona. Em placas AMD e Intel a transcrição da fala e a exportação também usam a placa. Em PC sem placa de vídeo tudo roda no processador, e por isso a análise demora mais. O resultado é o mesmo.</p></details>
+        <details><summary>Quanto espaço ele ocupa?</summary><p>O instalador tem 1,2 GB. Na primeira análise o Cortes baixa o modelo de transcrição, de 1,6 GB, uma vez só. A IA local é opcional e ocupa de 5 a 9 GB, conforme o modelo.</p></details>
+        <details><summary>Como recebo as atualizações?</summary><p>Pelo próprio programa: Configurações, Atualização, Procurar atualização. Ele baixa só o que mudou, cerca de 27 MB, e mantém as suas gravações analisadas, a galeria e as configurações. Quando uma versão troca também as bibliotecas do programa, ele avisa e você baixa o instalador desta página de novo; os seus dados continuam como estão.</p></details>
         <details><summary>Preciso conectar o YouTube?</summary><p>Não. Conectar serve para duas coisas opcionais: o Cortes ler o desempenho dos seus Shorts e você enviar os vídeos sem abrir o Studio. O Google mostra um aviso de app não verificado no login; clique em Avançado para continuar.</p></details>
       </div>
     </div>
@@ -643,16 +641,15 @@
   const rolar = () => raiz.style.setProperty("--rolagem", Math.min(1, scrollY / Math.max(1, raiz.scrollHeight - innerHeight)).toFixed(4));
   addEventListener("scroll", rolar, { passive: true }); addEventListener("resize", rolar); rolar();
 
-  // escolha da placa
-  const BASE = "https://github.com/FrankSilva01/cortes-app/releases/latest/download/";
-  const ARQ = { nvidia: ["CortesSetup-NVIDIA.exe", "1,2 GB", "NVIDIA"], amd: ["CortesSetup-AMD-Intel.exe", "226 MB", "AMD"], intel: ["CortesSetup-AMD-Intel.exe", "226 MB", "Intel"] };
-  const botao = document.getElementById("botao"), arquivo = document.getElementById("arquivo");
+  // a placa marcada só muda a explicação: o instalador é um só
+  const NA_PLACA = {
+    nvidia: ["NVIDIA", "Na NVIDIA a transcrição da fala e a exportação rodam na placa. É onde a análise fica mais rápida."],
+    amd: ["AMD", "Na AMD a transcrição da fala e a exportação rodam na placa."],
+    intel: ["Intel", "Com placa Arc, tudo roda nela. Só com vídeo integrado, ou sem placa, o Cortes mede e usa o que for mais rápido: a placa ou o processador."],
+  };
+  const arquivo = document.getElementById("arquivo");
   function escolher(placa) {
-    const [nome, tamanho, rotulo] = ARQ[placa];
-    botao.href = BASE + nome;
-    botao.removeAttribute("aria-disabled");
-    botao.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Baixar para ' + rotulo;
-    arquivo.innerHTML = "<strong>" + nome + "</strong>" + tamanho + ", para Windows 10 ou 11";
+    arquivo.innerHTML = "<strong>CortesSetup.exe</strong>1,2 GB, para Windows 10 ou 11. " + NA_PLACA[placa][1];
   }
   for (const r of document.querySelectorAll("input[name=placa]")) r.addEventListener("change", () => escolher(r.value));
 
@@ -666,10 +663,10 @@
       document.querySelector("input[value=" + placa + "]").checked = true;
       escolher(placa);
       const p = document.getElementById("palpite");
-      p.textContent = "Este navegador indica uma placa " + ARQ[placa][2] + ", então ela já veio marcada. Confira antes de baixar.";
+      p.textContent = "Este navegador indica uma placa " + NA_PLACA[placa][0] + ", então ela já veio marcada.";
       p.hidden = false;
     }
-  } catch (e) { /* sem palpite: a pessoa escolhe */ }
+  } catch (e) { /* sem palpite: a explicação aparece quando a pessoa marcar a placa */ }
 
   // número e data da versão mais nova
   fetch("https://api.github.com/repos/FrankSilva01/cortes-app/releases/latest").then((r) => (r.ok ? r.json() : null)).then((d) => {
